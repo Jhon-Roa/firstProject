@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
@@ -75,8 +76,8 @@ public class ClienteRepository implements ClienteService {
     @Override
     public void deleteCliente(String idCliente) {
         try {
-            String query = "DELETE" +
-                           "FROM cliente" +
+            String query = "DELETE " +
+                           "FROM cliente " +
                            "WHERE idCliente = ?";
             PreparedStatement ps= connection.prepareStatement(query);
             ps.setString(1, idCliente);
@@ -89,27 +90,64 @@ public class ClienteRepository implements ClienteService {
     @Override
     public Optional<ClienteDto> findClienteById(String idCliente) {
         try {
-            String query = "SELECT c.idCliente, c.primerNombre, c.segundoNombre, c.primerAperllido, c.segundoApellido, c.edad, c.fechaNacimiento, b.nombre, td.nombre " +
+            String query = "SELECT c.idCliente, c.primerNombre, c.segundoNombre, c.primerApellido, c.segundoApellido, c.edad, c.fechaNacimiento, b.nombre, td.nombre " +
                            "FROM cliente " +
-                           "JOIN tipoDocumento AS tp USING(idTipoDocumento) " +
+                           "JOIN tipoDocumento AS td USING(idTipoDocumento) " +
                            "JOIN barrio AS b USING(idBarrio) " +
                            "WHERE idCliente = ?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, idCliente);
             try (ResultSet rs = ps.executeQuery()) {
                 if(rs.next()) {
-                    ClienteDto cliente = new ClienteDto(rs.getString("primerNombre"), rs.getString("segundoNombre"), rs.getString("primerApellido"), rs.getString("segundoApellido"), rs.getInt("edad"), idCliente, null, idCliente, query);
+                    ClienteDto cliente = new ClienteDto(rs.getString("c.primerNombre"),
+                    rs.getString("c.segundoNombre"),
+                    rs.getString("c.primerApellido"), 
+                    rs.getString("c.segundoApellido"), 
+                    rs.getInt("c.edad"), 
+                    rs.getDate("c.fechaNacimiento"), 
+                    rs.getString("c.idCliente"), 
+                    rs.getDate("c.fechaRegistro"), 
+                    rs.getString("b.nombre"), 
+                    rs.getString("td.nombre"));
+                    return Optional.of(cliente);
                 }
+                
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return Optional.empty();
     }
 
     @Override
-    public List<Cliente> SeeAllClients() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'SeeAllClients'");
+    public List<ClienteDto> SeeAllClients() {
+        List<ClienteDto> allClients = new ArrayList<>();
+        try {
+            String query = "SELECT c.idCliente, c.primerNombre, c.segundoNombre, c.primerApellido, c.segundoApellido, c.edad, c.fechaNacimiento, b.nombre, td.nombre " +
+                           "FROM cliente " +
+                           "JOIN tipoDocumento AS td USING(idTipoDocumento) " +
+                           "JOIN barrio AS b USING(idBarrio) ";
+            PreparedStatement ps = connection.prepareStatement(query);
+            try (ResultSet rs = ps.executeQuery()) {
+                while(rs.next()) {
+                    ClienteDto cliente = new ClienteDto(rs.getString("c.primerNombre"),
+                    rs.getString("c.segundoNombre"),
+                    rs.getString("c.primerApellido"), 
+                    rs.getString("c.segundoApellido"), 
+                    rs.getInt("c.edad"), 
+                    rs.getDate("c.fechaNacimiento"), 
+                    rs.getString("c.idCliente"), 
+                    rs.getDate("c.fechaRegistro"), 
+                    rs.getString("b.nombre"), 
+                    rs.getString("td.nombre"));
+                    allClients.add(cliente);
+                } 
+                return allClients;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return allClients;
     }
 
 }

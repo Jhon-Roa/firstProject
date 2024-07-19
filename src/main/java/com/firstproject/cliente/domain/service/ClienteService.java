@@ -11,5 +11,5 @@ public interface ClienteService {
     void updateCliente(Cliente cliente, String idCliente);
     void deleteCliente(String idCliente);
     Optional<ClienteDto> findClienteById(String idCliente);
-    List<Cliente> SeeAllClients();
+    List<ClienteDto> SeeAllClients();
 }
