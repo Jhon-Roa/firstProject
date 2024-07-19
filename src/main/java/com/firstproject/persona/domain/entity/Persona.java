@@ -1,17 +1,32 @@
 package com.firstproject.persona.domain.entity;
 
+import java.sql.Date;
+
 public abstract class Persona {
     private String primerNombre;
     private String segundoNombre;
     private String primerApellido;
     private String segundoApellido;
     private int edad;
-    private String fechaNacimiento;
-    private int idTipoDocumento;
+    private Date fechaNacimiento;
 
     public Persona () {
     }
     
+    
+
+    public Persona(String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, int edad,
+            Date fechaNacimiento) {
+        this.primerNombre = primerNombre;
+        this.segundoNombre = segundoNombre;
+        this.primerApellido = primerApellido;
+        this.segundoApellido = segundoApellido;
+        this.edad = edad;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+
+
     public String getPrimerNombre() {
         return primerNombre;
     }
@@ -52,19 +67,11 @@ public abstract class Persona {
         this.edad = edad;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-
-    public int getIdTipoDocumento() {
-        return idTipoDocumento;
-    }
-
-    public void setIdTipoDocumento(int idTipoDocumento) {
-        this.idTipoDocumento = idTipoDocumento;
-    } 
 }

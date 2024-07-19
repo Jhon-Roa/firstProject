@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import com.firstproject.cliente.domain.entity.Cliente;
+import com.firstproject.cliente.domain.entity.ClienteDto;
 
 public interface ClienteService {
     void crearCliente(Cliente cliente);
-    void updateCliente(Cliente cliente);
-    Cliente deleteCliente(String idCliente);
-    Optional<Cliente> findClienteById(String idCliente);
+    void updateCliente(Cliente cliente, String idCliente);
+    void deleteCliente(String idCliente);
+    Optional<ClienteDto> findClienteById(String idCliente);
     List<Cliente> SeeAllClients();
 }
