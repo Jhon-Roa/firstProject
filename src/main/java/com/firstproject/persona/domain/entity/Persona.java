@@ -15,6 +15,17 @@ public abstract class Persona {
     
     
 
+    public Persona(String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
+            Date fechaNacimiento) {
+        this.primerNombre = primerNombre;
+        this.segundoNombre = segundoNombre;
+        this.primerApellido = primerApellido;
+        this.segundoApellido = segundoApellido;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+
+
     public Persona(String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, int edad,
             Date fechaNacimiento) {
         this.primerNombre = primerNombre;

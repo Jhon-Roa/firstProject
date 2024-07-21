@@ -33,13 +33,13 @@ public class ClienteRepository implements ClienteService {
     @Override
     public void crearCliente(Cliente cliente) {
         try {
-            String query = "INSERT INTO cliente (idCliente, primerNombre, segundoNombre, primerAperllido, segundoApellido, edad, fechaNacimiento, idBarrio, idTipoDocumento)" +
+            String query = "INSERT INTO cliente (idCliente, primerNombre, segundoNombre, primerApellido, segundoApellido, edad, fechaNacimiento, idBarrio, idTipoDocumento)" +
             "VALUES(?, ?, ?, ?, ?, calcular_edad(?), ?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, cliente.getIdCliente());
             ps.setString(2, cliente.getPrimerNombre());
             ps.setString(3, cliente.getSegundoNombre());
-            ps.setString(4, cliente.getSegundoNombre());
+            ps.setString(4, cliente.getPrimerApellido());
             ps.setString(5, cliente.getSegundoApellido());
             ps.setDate(6, cliente.getFechaNacimiento());
             ps.setDate(7, cliente.getFechaNacimiento());

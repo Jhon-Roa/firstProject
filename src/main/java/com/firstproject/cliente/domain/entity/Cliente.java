@@ -7,11 +7,23 @@ import com.firstproject.persona.domain.entity.Persona;
 public class Cliente extends Persona {
     private String idCliente;
     private Date fechaRegistro;
-    private int idBarrio;
+    private Integer idBarrio;
     private int idTipoDocumento;
 
     public Cliente() {
     }
+
+    
+
+    public Cliente(String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
+            Date fechaNacimiento, String idCliente, Integer idBarrio, int idTipoDocumento) {
+        super(primerNombre, segundoNombre, primerApellido, segundoApellido, fechaNacimiento);
+        this.idCliente = idCliente;
+        this.idBarrio = idBarrio;
+        this.idTipoDocumento = idTipoDocumento;
+    }
+
+
 
     public Date getFechaRegistro() {
         return fechaRegistro;
@@ -21,11 +33,11 @@ public class Cliente extends Persona {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public int getIdBarrio() {
+    public Integer getIdBarrio() {
         return idBarrio;
     }
 
-    public void setIdBarrio(int idBarrio) {
+    public void setIdBarrio(Integer idBarrio) {
         this.idBarrio = idBarrio;
     }
 
