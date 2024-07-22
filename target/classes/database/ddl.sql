@@ -80,6 +80,16 @@ CREATE TABLE proveedor (
     REFERENCES barrio(idBarrio) ON DELETE CASCADE
 );
 
+CREATE TABLE proveedorlaboratorio (
+    idProveedor INT,
+    idLaboratorio INT,
+    CONSTRAINT pk_ProveedorLaboratorio PRIMARY KEY (idProveedor, idLaboratorio),
+    CONSTRAINT fk_idProveedor_proveedorLaboratorio FOREIGN KEY (idProveedor)
+    REFERENCES proveedor(idProveedor) ON DELETE CASCADE,
+    CONSTRAINT fk_idLaboratorio_proveedorLaboratorio FOREIGN KEY (idLaboratorio)
+    REFERENCES laboratorio(idLaboratorio) ON DELETE CASCADE
+);
+
 CREATE TABLE categoriaPrincipioActivo (
     idCategoriaPrincipioActivo INT AUTO_INCREMENT,
     nombre VARCHAR(20),
@@ -147,15 +157,6 @@ CREATE TABLE productoProveedor (
     REFERENCES proveedor(idProveedor) ON DELETE CASCADE
 );
 
-CREATE TABLE productoLaboratio (
-    codigoProducto VARCHAR(30),
-    idLaboratorio INT,
-    CONSTRAINT productoLaboratio PRIMARY KEY (codigoProducto, idLaboratorio),
-    CONSTRAINT fk_codigoProducto_productoLaboratio FOREIGN KEY (codigoProducto)
-    REFERENCES producto(codigoProducto) ON DELETE CASCADE,
-    CONSTRAINT fk_idLaboratorio_productoLaboratio FOREIGN KEY (idLaboratorio)
-    REFERENCES laboratio(idLaboratorio) ON DELETE CASCADE
-);
 
 CREATE TABLE historialCompra (
     idCompra INT AUTO_INCREMENT,
