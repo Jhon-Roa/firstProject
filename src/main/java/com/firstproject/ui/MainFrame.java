@@ -6,8 +6,13 @@ import com.firstproject.barrio.application.CreateBarrioUseCase;
 import com.firstproject.barrio.application.GetAllBarriosUseCase;
 import com.firstproject.ciudad.application.GetAllCiudadesUseCase;
 import com.firstproject.cliente.application.CreateClienteUseCase;
+import com.firstproject.cliente.application.FindClientByIdUseCase;
+import com.firstproject.cliente.application.FindClienteByIdNoDtoUseCase;
+import com.firstproject.cliente.application.SeeAllClientesNoDtoUseCase;
+import com.firstproject.cliente.application.UpdateClienteUseCase;
 import com.firstproject.cliente.infrastructure.in.ClienteAdminButton;
 import com.firstproject.cliente.infrastructure.in.CrearClienteJPanel;
+import com.firstproject.cliente.infrastructure.in.UpdateClienteJpanel;
 import com.firstproject.pais.application.GetAllPaisesUseCase;
 import com.firstproject.region.application.GetAllRegionesUseCase;
 import com.firstproject.tipodocumento.application.GetAllTipoDocumentosUseCase;
@@ -18,6 +23,9 @@ import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
     private JPanel contentPanel;
+    private SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase;
+    private UpdateClienteUseCase updateClienteUseCase;
+    private FindClienteByIdNoDtoUseCase findClienteByIdNoDtoUseCase;
     private CreateClienteUseCase createClienteUseCase;
     private GetAllPaisesUseCase getAllPaisesUseCase;
     private GetAllRegionesUseCase getAllRegionesUseCase;
@@ -26,13 +34,19 @@ public class MainFrame extends JFrame {
     private CreateBarrioUseCase createBarrioUseCase;
     private GetAllTipoDocumentosUseCase getAllTipoDocumentosUseCase;
 
-    public MainFrame(CreateClienteUseCase createClienteUseCase,
+    public MainFrame(SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase,
+    UpdateClienteUseCase updateClienteUseCase,
+    FindClienteByIdNoDtoUseCase findClienteByIdNoDtoUseCase,
+    CreateClienteUseCase createClienteUseCase,
     GetAllPaisesUseCase getAllPaisesUseCase,
     GetAllRegionesUseCase getAllRegionesUseCase,
     GetAllCiudadesUseCase getAllCiudadesUseCase,
     GetAllBarriosUseCase getAllBarriosUseCase,
     CreateBarrioUseCase createBarrioUseCase,
     GetAllTipoDocumentosUseCase getAllTipoDocumentosUseCase) {
+        this.seeAllClientesNoDtoUseCase = seeAllClientesNoDtoUseCase;
+        this.updateClienteUseCase = updateClienteUseCase;
+        this.findClienteByIdNoDtoUseCase = findClienteByIdNoDtoUseCase;
         this.createClienteUseCase = createClienteUseCase;
         this.getAllPaisesUseCase = getAllPaisesUseCase;
         this.getAllRegionesUseCase = getAllRegionesUseCase;
@@ -53,7 +67,8 @@ public class MainFrame extends JFrame {
 
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        leftPanel.add(new ClienteAdminButton(mostrarFormCreateUser())); //clienteAdminButton: tiene todos los ActionListener
+        leftPanel.add(new ClienteAdminButton(mostrarFormCreateUser(),
+        mostrarFormUpdateUser())); //clienteAdminButton: tiene todos los ActionListener
 
         JScrollPane scrollPane = new JScrollPane(leftPanel);
         scrollPane.setPreferredSize(new Dimension(200, getHeight()));
@@ -82,6 +97,27 @@ public class MainFrame extends JFrame {
 
                 updateContent(crearClienteJPanel);
             }
+        };
+    }
+
+    private ActionListener mostrarFormUpdateUser() {
+        return new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UpdateClienteJpanel updateClienteJpanel = new UpdateClienteJpanel(findClienteByIdNoDtoUseCase, 
+                seeAllClientesNoDtoUseCase, 
+                updateClienteUseCase, 
+                getAllPaisesUseCase, 
+                getAllRegionesUseCase, 
+                getAllCiudadesUseCase, 
+                getAllBarriosUseCase, 
+                createBarrioUseCase, 
+                getAllTipoDocumentosUseCase);
+
+                updateContent(updateClienteJpanel);
+            }
+            
         };
     }
 

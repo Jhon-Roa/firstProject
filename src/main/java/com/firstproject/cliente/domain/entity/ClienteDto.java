@@ -23,8 +23,6 @@ public class ClienteDto extends Persona{
         this.documento = documento;
     }
 
-
-
     public Date getFechaRegistro() {
         return fechaRegistro;
     }

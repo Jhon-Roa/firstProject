@@ -13,7 +13,7 @@ public class ClienteAdminButton extends JPanel {
     private boolean menuExpanded = false;
     private JPanel optionsPanel;
 
-    public ClienteAdminButton(ActionListener actionListener) {
+    public ClienteAdminButton(ActionListener actionListenerCreate, ActionListener actionListenerUpdate) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(getWidth(), 200)); // Ajusta el tamaño del JPanel si es necesario
 
@@ -49,7 +49,8 @@ public class ClienteAdminButton extends JPanel {
         optionsPanel.add(verClientes);
         optionsPanel.add(buscarCliente);
 
-        crearCliente.addActionListener(actionListener);
+        crearCliente.addActionListener(actionListenerCreate);
+        actualizarCliente.addActionListener(actionListenerUpdate);
 
         optionsPanel.setVisible(menuExpanded); // Inicialmente oculto
 

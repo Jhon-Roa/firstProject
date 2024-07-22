@@ -2,6 +2,7 @@ package com.firstproject.cliente.infrastructure.in;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,8 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.Date;
-import java.awt.FlowLayout;
+import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,10 +20,14 @@ import javax.swing.JTextField;
 
 import com.firstproject.barrio.application.CreateBarrioUseCase;
 import com.firstproject.barrio.application.GetAllBarriosUseCase;
-import com.firstproject.barrio.domain.entity.Barrio;
+import com.firstproject.barrio.infrastructure.in.BarrioDropDown;
 import com.firstproject.ciudad.application.GetAllCiudadesUseCase;
+import com.firstproject.ciudad.domain.entity.Ciudad;
 import com.firstproject.ciudad.infrastructure.in.CiudadDropDown;
 import com.firstproject.cliente.application.CreateClienteUseCase;
+import com.firstproject.cliente.application.FindClienteByIdNoDtoUseCase;
+import com.firstproject.cliente.application.SeeAllClientesNoDtoUseCase;
+import com.firstproject.cliente.application.UpdateClienteUseCase;
 import com.firstproject.cliente.domain.entity.Cliente;
 import com.firstproject.pais.application.GetAllPaisesUseCase;
 import com.firstproject.pais.domain.entity.Pais;
@@ -32,14 +36,14 @@ import com.firstproject.region.application.GetAllRegionesUseCase;
 import com.firstproject.region.domain.entity.Region;
 import com.firstproject.region.infrastructure.in.RegionDropDown;
 import com.firstproject.tipodocumento.application.GetAllTipoDocumentosUseCase;
-import com.firstproject.tipodocumento.domain.entity.TipoDocumento;
 import com.firstproject.tipodocumento.infraestructure.in.TipoDocumentoDropDown;
-import com.firstproject.barrio.infrastructure.in.BarrioDropDown;
-import com.firstproject.ciudad.domain.entity.Ciudad;
 import com.toedter.calendar.JDateChooser;
 
-public class CrearClienteJPanel extends JPanel {
-    private CreateClienteUseCase createClienteUseCase;
+public class UpdateClienteJpanel extends JPanel {
+    private FindClienteByIdNoDtoUseCase findClienteByIdNoDtoUseCase;
+    private SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase;
+    private UpdateClienteUseCase updateClienteUseCase;
+    private ClienteDropDown clienteDropDown;
     private GetAllPaisesUseCase getAllPaisesUseCase;
     private PaisDropDown paisDropDown;
     private GetAllRegionesUseCase allRegionesUseCase;
@@ -52,24 +56,26 @@ public class CrearClienteJPanel extends JPanel {
     private GetAllTipoDocumentosUseCase getAllTipoDocumentosUseCase;
     private TipoDocumentoDropDown tipoDocumentoDropDown;
 
-    // Componentes del formulario
     private JTextField documentoField;
     private JTextField primerNombreField;
     private JTextField segundoNombreField;
     private JTextField primerApellidoField;
     private JTextField segundoApellidoField;
     private JDateChooser fechaNacimientoChooser;
-    
 
-    public CrearClienteJPanel(CreateClienteUseCase createClienteUseCase, 
+
+    public UpdateClienteJpanel(FindClienteByIdNoDtoUseCase findClienteByIdNoDtoUseCase,
+    SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase,
+    UpdateClienteUseCase updateClienteUseCase, 
     GetAllPaisesUseCase getAllPaisesUseCase,
     GetAllRegionesUseCase getAllRegionesUseCase,
     GetAllCiudadesUseCase getAllCiudadesUseCase,
     GetAllBarriosUseCase getAllBarriosUseCase,
     CreateBarrioUseCase createBarrioUseCase,
     GetAllTipoDocumentosUseCase getAllTipoDocumentosUseCase) {
-
-        this.createClienteUseCase = createClienteUseCase;
+        this.findClienteByIdNoDtoUseCase = findClienteByIdNoDtoUseCase;
+        this.seeAllClientesNoDtoUseCase = seeAllClientesNoDtoUseCase;
+        this.updateClienteUseCase = updateClienteUseCase;
         this.getAllPaisesUseCase = getAllPaisesUseCase;
         this.allRegionesUseCase = getAllRegionesUseCase;
         this.getAllCiudadesUseCase = getAllCiudadesUseCase;
@@ -78,33 +84,43 @@ public class CrearClienteJPanel extends JPanel {
         this.getAllTipoDocumentosUseCase = getAllTipoDocumentosUseCase;
 
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(600, 500));
+        setPreferredSize((new Dimension(600, 500)));
 
-        // Initialize components
         initComponents();
 
-        // Add components to the panel
         addComponentsToPanel();
     }
 
     private void initComponents() {
+        clienteDropDown= new ClienteDropDown(buscarCliente(), seeAllClientesNoDtoUseCase);
         paisDropDown = new PaisDropDown(habilitarRegion(), getAllPaisesUseCase);
         regionDropDown = new RegionDropDown(habilitarCiudad(), allRegionesUseCase);
         ciudadDropDown = new CiudadDropDown(habilitarBarrio(), getAllCiudadesUseCase);
         barrioDropDown = new BarrioDropDown(crearBarrio(), getAllBarriosUseCase);
         tipoDocumentoDropDown = new TipoDocumentoDropDown(getAllTipoDocumentosUseCase);
-
     }
 
     private void addComponentsToPanel() {
         JPanel createClienteFormulario = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5); // Espaciado alrededor de los componentes
+        gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
-    
+
         int row = 0;
-        
+
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        JLabel clienteLabel = new JLabel("cliente");
+        createClienteFormulario.add(clienteLabel, gbc);
+
+        gbc.gridx = 1;
+        clienteDropDown.updatCliente();
+        createClienteFormulario.add(clienteDropDown, gbc);
+
+
         // Documento
+        row++;
         gbc.gridx = 0;
         gbc.gridy = row;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -289,51 +305,44 @@ public class CrearClienteJPanel extends JPanel {
         add(createClienteFormulario, BorderLayout.CENTER);
 
         // Acción del botón "Guardar Usuario"
-        guardarUsuarioButton.addActionListener(new ActionListener() {
+        /* guardarUsuarioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 guardarUsuario(); // Llama a la función para obtener y mostrar los datos
             }
-        });
+        }); */
     }
 
-    private void guardarUsuario() {
-        String idCliente = documentoField.getText();
-        String primerNombre = primerNombreField.getText();
-        String segundoNombre = segundoNombreField.getText();
-        String primerApellido = primerApellidoField.getText();
-        String segundoApellido = segundoApellidoField.getText();
-        java.util.Date fechaNacimientoNoParse = fechaNacimientoChooser.getDate();
-        Date fechaNacimiento = new Date(fechaNacimientoNoParse.getTime());
-        Barrio barrio = barrioDropDown.getSelecteBarrio();
-        TipoDocumento tipoDocumento = tipoDocumentoDropDown.getSelectedTipoDocumento();
-        
-        if (idCliente.isEmpty() || primerNombre.isEmpty() || primerApellido.isEmpty() || fechaNacimiento == null || barrio == null || tipoDocumento == null) {
-            JOptionPane.showMessageDialog(null, "Estás ingresando valores nulos o vacíos en los campos marcados como obligatorios.", "Operación inválida", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    private void inhabilitarFormulario() {
+        documentoField.setEnabled(false);
+        primerNombreField.setEnabled(false);
+        segundoNombreField.setEnabled(false);
+        primerApellidoField.setEnabled(false);
+        segundoApellidoField.setEnabled(false);
+        fechaNacimientoChooser.setEnabled(false);
 
-        Cliente cliente = new Cliente(primerNombre, 
-        segundoNombre, 
-        primerApellido, 
-        segundoApellido, 
-        fechaNacimiento, 
-        idCliente, 
-        (barrio != null ? barrio.getIdBarrio() : null ), 
-        tipoDocumento.getidTipoDocumento());
-        createClienteUseCase.execute(cliente); 
-
-        documentoField.setText("");
-        primerNombreField.setText("");
-        segundoNombreField.setText("");
-        primerApellidoField.setText("");
-        segundoApellidoField.setText("");
-        
-        JOptionPane.showMessageDialog(null, "guardadoo correctamente", "guardao", JOptionPane.YES_OPTION);
-
+        revalidate();
+        repaint();
     }
 
-    private ActionListener habilitarRegion() {
+
+
+    private ActionListener buscarCliente() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String idCliente = JOptionPane.showInputDialog(null, "ingrese la id del cliente", "buscar cliente", JOptionPane.PLAIN_MESSAGE);
+                Optional<Cliente> cliente = findClienteByIdNoDtoUseCase.execute(idCliente);
+
+                if(!cliente.isPresent()) {
+                    JOptionPane.showMessageDialog(null, "el id no existe", "error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+        };
+    }
+
+        private ActionListener habilitarRegion() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -390,3 +399,5 @@ public class CrearClienteJPanel extends JPanel {
         };
     }
 }
+
+

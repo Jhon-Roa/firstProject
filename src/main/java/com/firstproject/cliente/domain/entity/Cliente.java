@@ -1,6 +1,7 @@
 package com.firstproject.cliente.domain.entity;
 
 import java.sql.Date;
+import java.text.MessageFormat;
 
 import com.firstproject.persona.domain.entity.Persona;
 
@@ -13,8 +14,6 @@ public class Cliente extends Persona {
     public Cliente() {
     }
 
-    
-
     public Cliente(String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
             Date fechaNacimiento, String idCliente, Integer idBarrio, int idTipoDocumento) {
         super(primerNombre, segundoNombre, primerApellido, segundoApellido, fechaNacimiento);
@@ -22,8 +21,6 @@ public class Cliente extends Persona {
         this.idBarrio = idBarrio;
         this.idTipoDocumento = idTipoDocumento;
     }
-
-
 
     public Date getFechaRegistro() {
         return fechaRegistro;
@@ -57,5 +54,8 @@ public class Cliente extends Persona {
         this.idTipoDocumento = idTipoDocumento;
     }
 
-    
+    @Override 
+    public String toString() {
+        return getPrimerNombre();
+    }
 }

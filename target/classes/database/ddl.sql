@@ -62,7 +62,7 @@ CREATE TABLE cliente (
     REFERENCES barrio(idBarrio)
 );
 
-CREATE TABLE laboratio (
+CREATE TABLE laboratorio (
     idLaboratorio INT AUTO_INCREMENT,
     nombre VARCHAR(50) NOT NULL,
     idBarrio INT NOT NULL,

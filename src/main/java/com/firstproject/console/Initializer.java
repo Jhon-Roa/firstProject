@@ -10,8 +10,10 @@ import com.firstproject.ciudad.infrastructure.out.CiudadRepository;
 import com.firstproject.cliente.application.CreateClienteUseCase;
 import com.firstproject.cliente.application.DeleteClienteUseCase;
 import com.firstproject.cliente.application.FindClientByIdUseCase;
+import com.firstproject.cliente.application.FindClienteByIdNoDtoUseCase;
+import com.firstproject.cliente.application.SeeAllClientesNoDtoUseCase;
 import com.firstproject.cliente.application.SeeAllClientsUseCase;
-import com.firstproject.cliente.application.UpdatePersonUseCase;
+import com.firstproject.cliente.application.UpdateClienteUseCase;
 import com.firstproject.cliente.domain.service.ClienteService;
 import com.firstproject.cliente.infrastructure.out.ClienteRepository;
 import com.firstproject.pais.application.GetAllPaisesUseCase;
@@ -47,8 +49,10 @@ public class Initializer {
     private CreateClienteUseCase createClienteUseCase;
     private DeleteClienteUseCase deleteClienteUseCase;
     private FindClientByIdUseCase findClientByIdUseCase;
+    private FindClienteByIdNoDtoUseCase findClienteByIdNoDtoUseCase;
     private SeeAllClientsUseCase seeAllClientsUseCase;
-    private UpdatePersonUseCase updatePersonUseCase;
+    private SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase;
+    private UpdateClienteUseCase updatePersonUseCase;
     
     public Initializer() {
         // inicializamos los repositorios
@@ -73,16 +77,21 @@ public class Initializer {
         createClienteUseCase = new CreateClienteUseCase(clienteService);
         deleteClienteUseCase = new DeleteClienteUseCase(clienteService);
         findClientByIdUseCase = new FindClientByIdUseCase(clienteService);
+        findClienteByIdNoDtoUseCase = new FindClienteByIdNoDtoUseCase(clienteService);
         seeAllClientsUseCase = new SeeAllClientsUseCase(clienteService);
-        updatePersonUseCase = new UpdatePersonUseCase(clienteService);
+        seeAllClientesNoDtoUseCase = new SeeAllClientesNoDtoUseCase(clienteService);
+        updatePersonUseCase = new UpdateClienteUseCase(clienteService);
 
         //llamamos mainFrame (UI principal)
-        MainFrame mainFrame = new MainFrame(createClienteUseCase, 
+        MainFrame mainFrame = new MainFrame(seeAllClientesNoDtoUseCase, 
+        updatePersonUseCase, 
+        findClienteByIdNoDtoUseCase, 
+        createClienteUseCase, 
         getAllPaisesUseCase, 
         getAllRegionesUseCase, 
         getAllCiudadesUseCase, 
         getAllBarriosUseCase, 
-        createBarrioUseCase,
+        createBarrioUseCase, 
         getAllTipoDocumentosUseCase);
         
         mainFrame.setVisible(true);

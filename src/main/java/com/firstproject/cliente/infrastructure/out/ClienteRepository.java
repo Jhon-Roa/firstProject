@@ -90,8 +90,8 @@ public class ClienteRepository implements ClienteService {
     @Override
     public Optional<ClienteDto> findClienteById(String idCliente) {
         try {
-            String query = "SELECT c.idCliente, c.primerNombre, c.segundoNombre, c.primerApellido, c.segundoApellido, c.edad, c.fechaNacimiento, b.nombre, td.nombre " +
-                           "FROM cliente " +
+            String query = "SELECT c.idCliente, c.primerNombre, c.segundoNombre, c.primerApellido, c.segundoApellido, c.edad, c.fechaNacimiento, c.fechaRegistro, b.nombre, td.nombre " +
+                           "FROM cliente AS c " +
                            "JOIN tipoDocumento AS td USING(idTipoDocumento) " +
                            "JOIN barrio AS b USING(idBarrio) " +
                            "WHERE idCliente = ?";
@@ -123,8 +123,8 @@ public class ClienteRepository implements ClienteService {
     public List<ClienteDto> SeeAllClients() {
         List<ClienteDto> allClients = new ArrayList<>();
         try {
-            String query = "SELECT c.idCliente, c.primerNombre, c.segundoNombre, c.primerApellido, c.segundoApellido, c.edad, c.fechaNacimiento, b.nombre, td.nombre " +
-                           "FROM cliente " +
+            String query = "SELECT c.idCliente, c.primerNombre, c.segundoNombre, c.primerApellido, c.segundoApellido, c.edad, c.fechaNacimiento, c.fechaRegistro, b.nombre, td.nombre " +
+                           "FROM cliente AS c " +
                            "JOIN tipoDocumento AS td USING(idTipoDocumento) " +
                            "JOIN barrio AS b USING(idBarrio) ";
             PreparedStatement ps = connection.prepareStatement(query);
@@ -148,6 +148,62 @@ public class ClienteRepository implements ClienteService {
             e.printStackTrace();
         }
         return allClients;
+    }
+
+    @Override
+    public Optional<Cliente> findClienteByIdNoDto(String idCliente) {
+        try {
+            String query = "SELECT idCliente, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaNacimiento, idBarrio, idTipoDocumento " +
+                           "FROM cliente " +
+                           "WHERE idCliente = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, idCliente);
+            try (ResultSet rs = ps.executeQuery()) {
+                if(rs.next()) {
+                    Cliente cliente = new Cliente(rs.getString("primerNombre"),
+                    rs.getString("segundoNombre"),
+                    rs.getString("primerApellido"), 
+                    rs.getString("segundoApellido"), 
+                    rs.getDate("fechaNacimiento"), 
+                    rs.getString("idCliente"), 
+                    rs.getInt("idBarrio"), 
+                    rs.getInt("idTipoDocumento"));
+                    return Optional.of(cliente);
+                }
+                
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public List<Cliente> SeeAllClientsNoDto() {
+        List<Cliente> clientes = new ArrayList<>();
+        try {
+            String query = "SELECT idCliente, primerNombre, segundoNombre, primerApellido, segundoApellido, fechaNacimiento, idBarrio, idTipoDocumento " +
+                           "FROM cliente ";
+            PreparedStatement ps = connection.prepareStatement(query);
+            try (ResultSet rs = ps.executeQuery()) {
+                while(rs.next()) {
+                    Cliente cliente = new Cliente(rs.getString("primerNombre"),
+                    rs.getString("segundoNombre"),
+                    rs.getString("primerApellido"), 
+                    rs.getString("segundoApellido"), 
+                    rs.getDate("fechaNacimiento"), 
+                    rs.getString("idCliente"), 
+                    rs.getInt("idBarrio"), 
+                    rs.getInt("idTipoDocumento"));
+                    clientes.add(cliente);
+                }
+                return clientes;
+                
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clientes;
     }
 
 }

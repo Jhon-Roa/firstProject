@@ -33,7 +33,9 @@ public class BarrioDropDown extends JPanel {
         setEnabled(false);
     }
 
-    
+    public void unhabilitarBarrios() {
+        
+    }
 
     public void updateBarrios(Ciudad selectedCiudad) {
         if (selectedCiudad == null) {
