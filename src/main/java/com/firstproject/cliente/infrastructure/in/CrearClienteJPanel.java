@@ -123,6 +123,15 @@ public class CrearClienteJPanel extends JPanel {
         documentoField = new JTextField(20);
         createClienteFormulario.add(documentoField, gbc);
 
+        documentoField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e){
+                if (documentoField.getText().length() > 30) {
+                    e.consume();
+                }
+            }
+        });
+
         // Primer Nombre
         row++;
         gbc.gridx = 0;

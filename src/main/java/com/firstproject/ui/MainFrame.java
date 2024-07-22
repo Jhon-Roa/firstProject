@@ -59,7 +59,7 @@ public class MainFrame extends JFrame {
         scrollPane.setPreferredSize(new Dimension(200, getHeight()));
 
         contentPanel = new JPanel();
-        contentPanel.add(new JLabel("Content Area"));
+        contentPanel.add(new JLabel("APLICACION FARMACIA"));
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, contentPanel);
         splitPane.setDividerLocation(200);
