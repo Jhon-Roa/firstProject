@@ -38,8 +38,12 @@ public class RegionDropDown extends JPanel {
         return (Region) regionComboBox.getSelectedItem();
     }
 
-    public void reset() {
-        regionComboBox.removeAllItems();
-        setEnabled(false);
+    public void swicher(boolean swicher) {
+        regionComboBox.setEnabled(swicher);
+    }
+
+    public void setDefaultItem(Region region) {
+        regionComboBox.addItem(region);
+        regionComboBox.setSelectedItem(region);
     }
 }

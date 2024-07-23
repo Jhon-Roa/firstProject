@@ -34,8 +34,12 @@ public class PaisDropDown extends JPanel {
         return (Pais) paisComboBox.getSelectedItem();
     }
 
-    public void reset() {
-        paisComboBox.removeAllItems();
-        setEnabled(false);
+    public void swicher(boolean swicher) {
+        paisComboBox.setEnabled(swicher);
+    }
+
+    public void setDefaultItem(Pais pais) {
+        paisComboBox.addItem(pais);
+        paisComboBox.setSelectedItem(pais);
     }
 }

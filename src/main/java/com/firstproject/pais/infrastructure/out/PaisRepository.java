@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.firstproject.barrio.domain.entity.Barrio;
 import com.firstproject.pais.domain.entity.Pais;
 import com.firstproject.pais.domain.service.PaisServices;
 
@@ -48,6 +50,29 @@ public class PaisRepository implements PaisServices {
             // TODO: handle exception
         }
         return paises;
+    }
+
+    @Override
+    public Pais getSpecifiedPais(int idPais) {
+        try {
+            String query = "SELECT idPais, nombre " +
+                           "FROM pais " +
+                           "WHERE idPais = ?";
+            PreparedStatement ps = connection.prepareStatement(query); 
+            ps.setInt(1, idPais);
+            try (ResultSet rs = ps.executeQuery()){
+                if(rs.next()) {
+                    Pais pais = new Pais(rs.getInt("idPais"), 
+                    rs.getString("nombre"));
+                    return pais;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
 }

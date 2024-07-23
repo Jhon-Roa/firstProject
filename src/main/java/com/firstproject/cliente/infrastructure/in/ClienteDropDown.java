@@ -16,13 +16,15 @@ public class ClienteDropDown extends JPanel {
     private JComboBox<Cliente> clienteComboBox;
     private SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase;
 
-    public ClienteDropDown(ActionListener actionListenerButton, SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase) {
+    public ClienteDropDown(ActionListener actionListenerDropDown, ActionListener actionListenerButton, SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase) {
         this.seeAllClientesNoDtoUseCase = seeAllClientesNoDtoUseCase;
 
-        buscarCliente = new JButton(" Buscar");
+        buscarCliente = new JButton("Buscar");
         buscarCliente.addActionListener(actionListenerButton);
 
         clienteComboBox = new JComboBox<>();
+        clienteComboBox.setSelectedItem("seleccionar");
+        clienteComboBox.addActionListener(actionListenerDropDown);
 
         setLayout(new BorderLayout());
 

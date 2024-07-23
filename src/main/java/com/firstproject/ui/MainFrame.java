@@ -4,7 +4,9 @@ import javax.swing.*;
 
 import com.firstproject.barrio.application.CreateBarrioUseCase;
 import com.firstproject.barrio.application.GetAllBarriosUseCase;
+import com.firstproject.barrio.application.GetSpecifiedBarrioUseCase;
 import com.firstproject.ciudad.application.GetAllCiudadesUseCase;
+import com.firstproject.ciudad.application.GetSpecifiedCiudadUseCase;
 import com.firstproject.cliente.application.CreateClienteUseCase;
 import com.firstproject.cliente.application.FindClientByIdUseCase;
 import com.firstproject.cliente.application.FindClienteByIdNoDtoUseCase;
@@ -15,6 +17,8 @@ import com.firstproject.cliente.infrastructure.in.CrearClienteJPanel;
 import com.firstproject.cliente.infrastructure.in.UpdateClienteJpanel;
 import com.firstproject.pais.application.GetAllPaisesUseCase;
 import com.firstproject.region.application.GetAllRegionesUseCase;
+import com.firstproject.region.application.GetSpecifiedPaisUseCase;
+import com.firstproject.region.application.GetSpecifiedRegionUseCase;
 import com.firstproject.tipodocumento.application.GetAllTipoDocumentosUseCase;
 
 import java.awt.*;
@@ -27,9 +31,13 @@ public class MainFrame extends JFrame {
     private UpdateClienteUseCase updateClienteUseCase;
     private FindClienteByIdNoDtoUseCase findClienteByIdNoDtoUseCase;
     private CreateClienteUseCase createClienteUseCase;
+    private GetSpecifiedPaisUseCase getSpecifiedPaisUseCase;
     private GetAllPaisesUseCase getAllPaisesUseCase;
+    private GetSpecifiedRegionUseCase getSpecifiedRegionUseCase;
     private GetAllRegionesUseCase getAllRegionesUseCase;
+    private GetSpecifiedCiudadUseCase getSpecifiedCiudadUseCase;
     private GetAllCiudadesUseCase getAllCiudadesUseCase;
+    private GetSpecifiedBarrioUseCase getSpecifiedBarrioUseCase;
     private GetAllBarriosUseCase getAllBarriosUseCase;
     private CreateBarrioUseCase createBarrioUseCase;
     private GetAllTipoDocumentosUseCase getAllTipoDocumentosUseCase;
@@ -38,9 +46,13 @@ public class MainFrame extends JFrame {
     UpdateClienteUseCase updateClienteUseCase,
     FindClienteByIdNoDtoUseCase findClienteByIdNoDtoUseCase,
     CreateClienteUseCase createClienteUseCase,
+    GetSpecifiedPaisUseCase getSpecifiedPaisUseCase,
     GetAllPaisesUseCase getAllPaisesUseCase,
+    GetSpecifiedRegionUseCase getSpecifiedRegionUseCase,
     GetAllRegionesUseCase getAllRegionesUseCase,
+    GetSpecifiedCiudadUseCase getSpecifiedCiudadUseCase,
     GetAllCiudadesUseCase getAllCiudadesUseCase,
+    GetSpecifiedBarrioUseCase getSpecifiedBarrioUseCase,
     GetAllBarriosUseCase getAllBarriosUseCase,
     CreateBarrioUseCase createBarrioUseCase,
     GetAllTipoDocumentosUseCase getAllTipoDocumentosUseCase) {
@@ -48,9 +60,13 @@ public class MainFrame extends JFrame {
         this.updateClienteUseCase = updateClienteUseCase;
         this.findClienteByIdNoDtoUseCase = findClienteByIdNoDtoUseCase;
         this.createClienteUseCase = createClienteUseCase;
+        this.getSpecifiedPaisUseCase = getSpecifiedPaisUseCase;
         this.getAllPaisesUseCase = getAllPaisesUseCase;
+        this.getSpecifiedRegionUseCase = getSpecifiedRegionUseCase;
         this.getAllRegionesUseCase = getAllRegionesUseCase;
+        this.getSpecifiedCiudadUseCase = getSpecifiedCiudadUseCase;
         this.getAllCiudadesUseCase = getAllCiudadesUseCase;
+        this.getSpecifiedBarrioUseCase = getSpecifiedBarrioUseCase;
         this.getAllBarriosUseCase = getAllBarriosUseCase;
         this.createBarrioUseCase = createBarrioUseCase;
         this.getAllTipoDocumentosUseCase = getAllTipoDocumentosUseCase;
@@ -108,9 +124,13 @@ public class MainFrame extends JFrame {
                 UpdateClienteJpanel updateClienteJpanel = new UpdateClienteJpanel(findClienteByIdNoDtoUseCase, 
                 seeAllClientesNoDtoUseCase, 
                 updateClienteUseCase, 
+                getSpecifiedPaisUseCase, 
                 getAllPaisesUseCase, 
+                getSpecifiedRegionUseCase, 
                 getAllRegionesUseCase, 
+                getSpecifiedCiudadUseCase, 
                 getAllCiudadesUseCase, 
+                getSpecifiedBarrioUseCase, 
                 getAllBarriosUseCase, 
                 createBarrioUseCase, 
                 getAllTipoDocumentosUseCase);

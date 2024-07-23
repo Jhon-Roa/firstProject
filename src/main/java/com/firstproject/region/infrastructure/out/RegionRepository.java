@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.firstproject.barrio.domain.entity.Barrio;
+import com.firstproject.ciudad.domain.entity.Ciudad;
 import com.firstproject.region.domain.entity.Region;
 import com.firstproject.region.domain.service.RegionServices;
 
@@ -51,5 +53,30 @@ public class RegionRepository implements RegionServices{
         return regiones;
     }
 
-    
+    @Override
+    public Region getSpecifiedRegion(int idRegion) {
+        try {
+            String query = "SELECT idRegion, nombre, idPais " +
+                           "FROM region " +
+                           "WHERE idRegion = ?";
+            PreparedStatement ps = connection.prepareStatement(query); 
+            ps.setInt(1, idRegion);
+            try (ResultSet rs = ps.executeQuery()){
+                if(rs.next()) {
+                    Region region = new Region(rs.getInt("idRegion"), 
+                    rs.getString("nombre"), 
+                    rs.getInt("idPais"));
+                    return region;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
+
+    
+

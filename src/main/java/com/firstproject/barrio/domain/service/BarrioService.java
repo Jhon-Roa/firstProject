@@ -8,4 +8,5 @@ import com.firstproject.ciudad.domain.entity.Ciudad;
 public interface BarrioService {
     void createBarrio(String barrio, Ciudad selectedCiudad);
     List<Barrio> getAllBarrios();
+    Barrio getSpecifiedBarrio(int idBarrio);
 }

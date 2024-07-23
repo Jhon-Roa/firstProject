@@ -52,7 +52,7 @@ public class ClienteRepository implements ClienteService {
     }
 
     @Override
-    public void updateCliente(Cliente cliente, String idCliente) {
+    public void updateCliente(Cliente cliente) {
         try {
             String query = "UPDATE cliente " +
                         "SET primerNombre= ?, segundoNombre= ?, primerApellido= ?, segundoApellido= ?, edad= calcular_edad(?), fechaNacimiento= ?, idBarrio= ?, idTipoDocumento= ? " +

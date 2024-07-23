@@ -33,10 +33,6 @@ public class BarrioDropDown extends JPanel {
         setEnabled(false);
     }
 
-    public void unhabilitarBarrios() {
-        
-    }
-
     public void updateBarrios(Ciudad selectedCiudad) {
         if (selectedCiudad == null) {
             System.out.println("cargando barrios...");
@@ -62,8 +58,13 @@ public class BarrioDropDown extends JPanel {
         return (Barrio) barrioComboBox.getSelectedItem();
     }
 
-    public void reset() {
-        barrioComboBox.removeAllItems();
-        setEnabled(false);
+    public void swicher(boolean swicher) {
+        barrioComboBox.setEnabled(swicher);
+        addBarrio.setEnabled(swicher);
+    }
+
+    public void setDefaultItem(Barrio barrio) {
+        barrioComboBox.addItem(barrio);
+        barrioComboBox.setSelectedItem(barrio);
     }
 }

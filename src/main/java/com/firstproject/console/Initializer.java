@@ -2,9 +2,11 @@ package com.firstproject.console;
 
 import com.firstproject.barrio.application.CreateBarrioUseCase;
 import com.firstproject.barrio.application.GetAllBarriosUseCase;
+import com.firstproject.barrio.application.GetSpecifiedBarrioUseCase;
 import com.firstproject.barrio.domain.service.BarrioService;
 import com.firstproject.barrio.infrastructure.out.BarrioRepository;
 import com.firstproject.ciudad.application.GetAllCiudadesUseCase;
+import com.firstproject.ciudad.application.GetSpecifiedCiudadUseCase;
 import com.firstproject.ciudad.domain.services.CiudadServices;
 import com.firstproject.ciudad.infrastructure.out.CiudadRepository;
 import com.firstproject.cliente.application.CreateClienteUseCase;
@@ -20,6 +22,8 @@ import com.firstproject.pais.application.GetAllPaisesUseCase;
 import com.firstproject.pais.domain.service.PaisServices;
 import com.firstproject.pais.infrastructure.out.PaisRepository;
 import com.firstproject.region.application.GetAllRegionesUseCase;
+import com.firstproject.region.application.GetSpecifiedPaisUseCase;
+import com.firstproject.region.application.GetSpecifiedRegionUseCase;
 import com.firstproject.region.domain.service.RegionServices;
 import com.firstproject.region.infrastructure.out.RegionRepository;
 import com.firstproject.tipodocumento.application.GetAllTipoDocumentosUseCase;
@@ -29,15 +33,19 @@ import com.firstproject.tipodocumento.infraestructure.out.TipoDocumentoRepositor
 import com.firstproject.ui.MainFrame;
 
 public class Initializer {
+    private GetSpecifiedPaisUseCase getSpecifiedPaisUseCase;
     private PaisServices paisServices;
     private GetAllPaisesUseCase getAllPaisesUseCase;
 
+    private GetSpecifiedRegionUseCase getSpecifiedRegionUseCase;
     private RegionServices regionServices;
     private GetAllRegionesUseCase getAllRegionesUseCase;
 
+    private GetSpecifiedCiudadUseCase getSpecifiedCiudadUseCase;
     private CiudadServices ciudadServices;
     private GetAllCiudadesUseCase getAllCiudadesUseCase;
 
+    private GetSpecifiedBarrioUseCase getSpecifiedBarrioUseCase;
     private BarrioService barrioService;
     private GetAllBarriosUseCase getAllBarriosUseCase;
     private CreateBarrioUseCase createBarrioUseCase;
@@ -58,15 +66,19 @@ public class Initializer {
         // inicializamos los repositorios
 
         paisServices = new PaisRepository();
+        getSpecifiedPaisUseCase = new GetSpecifiedPaisUseCase(paisServices);
         getAllPaisesUseCase = new GetAllPaisesUseCase(paisServices);
         
         regionServices = new RegionRepository();
+        getSpecifiedRegionUseCase = new GetSpecifiedRegionUseCase(regionServices);
         getAllRegionesUseCase = new GetAllRegionesUseCase(regionServices);
 
         ciudadServices = new CiudadRepository();
+        getSpecifiedCiudadUseCase = new GetSpecifiedCiudadUseCase(ciudadServices);
         getAllCiudadesUseCase = new GetAllCiudadesUseCase(ciudadServices);
 
         barrioService = new BarrioRepository();
+        getSpecifiedBarrioUseCase = new GetSpecifiedBarrioUseCase(barrioService);
         getAllBarriosUseCase = new GetAllBarriosUseCase(barrioService);
         createBarrioUseCase = new CreateBarrioUseCase(barrioService);
 
@@ -87,9 +99,12 @@ public class Initializer {
         updatePersonUseCase, 
         findClienteByIdNoDtoUseCase, 
         createClienteUseCase, 
-        getAllPaisesUseCase, 
+        getSpecifiedPaisUseCase, 
+        getAllPaisesUseCase, getSpecifiedRegionUseCase, 
         getAllRegionesUseCase, 
+        getSpecifiedCiudadUseCase, 
         getAllCiudadesUseCase, 
+        getSpecifiedBarrioUseCase, 
         getAllBarriosUseCase, 
         createBarrioUseCase, 
         getAllTipoDocumentosUseCase);

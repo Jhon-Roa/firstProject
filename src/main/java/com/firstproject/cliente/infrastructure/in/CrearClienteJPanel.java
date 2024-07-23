@@ -319,8 +319,9 @@ public class CrearClienteJPanel extends JPanel {
         segundoApellido, 
         fechaNacimiento, 
         idCliente, 
-        (barrio != null ? barrio.getIdBarrio() : null ), 
+        barrio.getIdBarrio(), 
         tipoDocumento.getidTipoDocumento());
+
         createClienteUseCase.execute(cliente); 
 
         documentoField.setText("");
@@ -329,7 +330,7 @@ public class CrearClienteJPanel extends JPanel {
         primerApellidoField.setText("");
         segundoApellidoField.setText("");
         
-        JOptionPane.showMessageDialog(null, "guardadoo correctamente", "guardao", JOptionPane.YES_OPTION);
+        JOptionPane.showMessageDialog(null, "guardado correctamente", "guardado", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
@@ -338,7 +339,6 @@ public class CrearClienteJPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (regionDropDown != null) {
-                    regionDropDown.reset();
                     Pais selectedPais = paisDropDown.getSelectedPais();
                     regionDropDown.updateRegions(selectedPais);
                     
@@ -352,7 +352,6 @@ public class CrearClienteJPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (ciudadDropDown != null) {
-                    ciudadDropDown.reset();
                     Region selectedRegion = regionDropDown.getSelectedRegion();
                     ciudadDropDown.updateCiudades(selectedRegion);
                 }
@@ -365,7 +364,6 @@ public class CrearClienteJPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (barrioDropDown != null) {
-                    barrioDropDown.reset();
                     Ciudad selectedCiudad = ciudadDropDown.getSelecteCiudad();
                     barrioDropDown.updateBarrios(selectedCiudad);
                 }
@@ -384,7 +382,6 @@ public class CrearClienteJPanel extends JPanel {
                 }
                 Ciudad ciudad = ciudadDropDown.getSelecteCiudad();
                 createBarrioUseCase.execute(nombre, ciudad);
-                barrioDropDown.reset();
                 barrioDropDown.updateBarrios(ciudad);
             }
         };

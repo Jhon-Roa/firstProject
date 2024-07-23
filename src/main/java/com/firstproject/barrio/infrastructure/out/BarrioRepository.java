@@ -65,4 +65,28 @@ public class BarrioRepository implements BarrioService  {
         }
         return barrios;
     }
+
+    @Override
+    public Barrio getSpecifiedBarrio(int idBarrio) {
+        try {
+            String query = "SELECT idBarrio, nombre, idCiudad " +
+                           "FROM barrio " +
+                           "WHERE idBarrio = ?";
+            PreparedStatement ps = connection.prepareStatement(query); 
+            ps.setInt(1, idBarrio);
+            try (ResultSet rs = ps.executeQuery()){
+                if(rs.next()) {
+                    Barrio barrio = new Barrio(rs.getInt("idBarrio"), 
+                    rs.getString("nombre"), 
+                    rs.getInt("idCiudad"));
+                    return barrio;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -31,4 +31,8 @@ public class TipoDocumentoDropDown extends JPanel {
     public TipoDocumento getSelectedTipoDocumento() {
         return (TipoDocumento) tipoDocumentoComboBox.getSelectedItem();
     }
+
+    public void swicher(boolean swicher)  {
+        tipoDocumentoComboBox.setEnabled(swicher);
+    }
 }

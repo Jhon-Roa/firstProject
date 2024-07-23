@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.firstproject.barrio.domain.entity.Barrio;
 import com.firstproject.ciudad.domain.entity.Ciudad;
 import com.firstproject.ciudad.domain.services.CiudadServices;
 
@@ -49,6 +50,30 @@ public class CiudadRepository implements CiudadServices {
             e.printStackTrace();
         }
         return ciudades;
+    }
+
+    @Override
+    public Ciudad getSpecifiedCiudad(int idCiudad) {
+        try {
+            String query = "SELECT idCiudad, nombre, idRegion " +
+                           "FROM ciudad " +
+                           "WHERE idCiudad = ?";
+            PreparedStatement ps = connection.prepareStatement(query); 
+            ps.setInt(1, idCiudad);
+            try (ResultSet rs = ps.executeQuery()){
+                if(rs.next()) {
+                    Ciudad ciudad = new Ciudad(rs.getInt("idCiudad"), 
+                    rs.getString("nombre"), 
+                    rs.getInt("idRegion"));
+                    return ciudad;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
 }

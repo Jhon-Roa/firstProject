@@ -8,7 +8,7 @@ import com.firstproject.cliente.domain.entity.ClienteDto;
 
 public interface ClienteService {
     void crearCliente(Cliente cliente);
-    void updateCliente(Cliente cliente, String idCliente);
+    void updateCliente(Cliente cliente);
     void deleteCliente(String idCliente);
     Optional<ClienteDto> findClienteById(String idCliente);
     List<ClienteDto> SeeAllClients();

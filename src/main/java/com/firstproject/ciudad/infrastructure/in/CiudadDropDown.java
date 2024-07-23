@@ -49,8 +49,12 @@ public class CiudadDropDown extends JPanel {
         return (Ciudad) ciudadComboBox.getSelectedItem();
     }
 
-    public void reset() {
-        ciudadComboBox.removeAllItems();
-        setEnabled(false);
+    public void swicher(boolean swicher) {
+        ciudadComboBox.setEnabled(swicher);
+    }
+
+    public void setDefaultItem(Ciudad ciudad) {
+        ciudadComboBox.addItem(ciudad);
+        ciudadComboBox.setSelectedItem(ciudad);
     }
 }
