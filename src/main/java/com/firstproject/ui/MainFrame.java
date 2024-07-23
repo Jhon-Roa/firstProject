@@ -12,8 +12,10 @@ import com.firstproject.cliente.application.DeleteClienteUseCase;
 import com.firstproject.cliente.application.FindClientByIdUseCase;
 import com.firstproject.cliente.application.FindClienteByIdNoDtoUseCase;
 import com.firstproject.cliente.application.SeeAllClientesNoDtoUseCase;
+import com.firstproject.cliente.application.SeeAllClientsUseCase;
 import com.firstproject.cliente.application.UpdateClienteUseCase;
 import com.firstproject.cliente.infrastructure.in.DeleteClienteJPanel;
+import com.firstproject.cliente.infrastructure.in.SeeAllClientesJPanel;
 import com.firstproject.cliente.infrastructure.in.ClienteAdminButton;
 import com.firstproject.cliente.infrastructure.in.CrearClienteJPanel;
 import com.firstproject.cliente.infrastructure.in.UpdateClienteJpanel;
@@ -30,6 +32,7 @@ import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
     // clases de clientes
+    private SeeAllClientsUseCase seeAllClientsUseCase;
     private FindClientByIdUseCase findClientByIdUseCase;
     private DeleteClienteUseCase deleteClienteUseCase;
     private SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase;
@@ -60,7 +63,8 @@ public class MainFrame extends JFrame {
     // panel de contenido
     private JPanel contentPanel;
     
-    public MainFrame(FindClientByIdUseCase findClientByIdUseCase,
+    public MainFrame(SeeAllClientsUseCase seeAllClientsUseCase,
+    FindClientByIdUseCase findClientByIdUseCase,
     DeleteClienteUseCase deleteClienteUseCase,
     SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase,
     UpdateClienteUseCase updateClienteUseCase,
@@ -77,6 +81,7 @@ public class MainFrame extends JFrame {
     CreateBarrioUseCase createBarrioUseCase,
     GetAllTipoDocumentosUseCase getAllTipoDocumentosUseCase) {
 
+        this.seeAllClientsUseCase = seeAllClientsUseCase;
         this.findClientByIdUseCase = findClientByIdUseCase;
         this.deleteClienteUseCase = deleteClienteUseCase;
         this.seeAllClientesNoDtoUseCase = seeAllClientesNoDtoUseCase;
@@ -111,7 +116,9 @@ public class MainFrame extends JFrame {
         leftPanel.add(new ClienteAdminButton(mostrarFormCreateUser(),
         mostrarFormUpdateUser(),
         deleteCliente(),
-        findCliente()));
+        findCliente(),
+        seeAllClients()
+        ));
 
         JScrollPane scrollPane = new JScrollPane(leftPanel);
         scrollPane.setPreferredSize(new Dimension(200, getHeight()));
@@ -180,6 +187,18 @@ public class MainFrame extends JFrame {
                 
                 updateContent(clientDelete);
             }    
+        };
+    }
+
+    private ActionListener seeAllClients() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SeeAllClientesJPanel seeAllClientesJPanel = new SeeAllClientesJPanel(seeAllClientsUseCase);
+
+                updateContent(seeAllClientesJPanel);
+            }
+            
         };
     }
 

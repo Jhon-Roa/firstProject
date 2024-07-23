@@ -25,8 +25,8 @@ public class VerClienteJPanel extends JPanel {
     private ClienteDropDown clienteDropDown;
     private FindClientByIdUseCase findClientByIdUseCase;
     private SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase;
-    private DefaultTableModel model;
 
+    private DefaultTableModel model;
     private JTable table;
     private JScrollPane jScrollPane;
     private boolean initializer;
@@ -48,7 +48,9 @@ public class VerClienteJPanel extends JPanel {
     }
 
     private void initComponents() {
-        clienteDropDown = new ClienteDropDown(seleccionarCliente(), buscarCliente(), seeAllClientesNoDtoUseCase);
+        clienteDropDown = new ClienteDropDown(seleccionarCliente(), 
+        buscarCliente(), 
+        seeAllClientesNoDtoUseCase);
     }
 
     private void addComponentsToPanel() {
@@ -80,18 +82,17 @@ public class VerClienteJPanel extends JPanel {
 
         model = new DefaultTableModel(columnNames, 0);
         table = new JTable(model);
-        table.setBorder(null);
+        table.setEnabled(false);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // Para que no ajuste automáticamente las columnas
-        table.getColumnModel().getColumn(0).setPreferredWidth(80); // Ancho preferido de la primera columna
-        table.getColumnModel().getColumn(1).setPreferredWidth(80); // Ancho preferido de la segunda columna
-        table.getColumnModel().getColumn(2).setPreferredWidth(80); // Ancho preferido de la tercera columna
-        table.getColumnModel().getColumn(3).setPreferredWidth(80); // Ancho preferido de la cuarta columna
-        table.getColumnModel().getColumn(4).setPreferredWidth(80); // Ancho preferido de la quinta columna
-        table.getColumnModel().getColumn(5).setPreferredWidth(80); // Ancho preferido de la sexta columna
+        table.getColumnModel().getColumn(0).setPreferredWidth(81);
+        table.getColumnModel().getColumn(1).setPreferredWidth(81);
+        table.getColumnModel().getColumn(2).setPreferredWidth(81);
+        table.getColumnModel().getColumn(3).setPreferredWidth(81);
+        table.getColumnModel().getColumn(4).setPreferredWidth(81);
+        table.getColumnModel().getColumn(5).setPreferredWidth(81);
 
         jScrollPane = new JScrollPane(table);
-        jScrollPane.setPreferredSize(new Dimension(470, table.getRowHeight() * 3)); 
-        jScrollPane.setBorder(null);
+        jScrollPane.setPreferredSize(new Dimension(470, 40)); 
         jScrollPane.setVisible(false); 
         createClienteFormulario.add(jScrollPane, gbc);
 
@@ -138,7 +139,6 @@ public class VerClienteJPanel extends JPanel {
     }
 
     private void showClienteDto(ClienteDto cliente) {
-        model.setRowCount(0);
         String nombre = String.format("%s, %s", cliente.getPrimerNombre(), cliente.getSegundoNombre());
         String apellido = cliente.getPrimerApellido() + " " + cliente.getSegundoApellido();
         Object[] rowData = {cliente.getIdCliente(), nombre, apellido, cliente.getEdad(), cliente.getFechaRegistro(),
