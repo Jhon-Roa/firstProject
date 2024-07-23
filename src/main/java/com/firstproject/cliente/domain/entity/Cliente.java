@@ -1,7 +1,6 @@
 package com.firstproject.cliente.domain.entity;
 
 import java.sql.Date;
-import java.text.MessageFormat;
 
 import com.firstproject.persona.domain.entity.Persona;
 

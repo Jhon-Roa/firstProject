@@ -95,7 +95,8 @@ public class Initializer {
         updatePersonUseCase = new UpdateClienteUseCase(clienteService);
 
         //llamamos mainFrame (UI principal)
-        MainFrame mainFrame = new MainFrame(deleteClienteUseCase, 
+        MainFrame mainFrame = new MainFrame(findClientByIdUseCase,
+        deleteClienteUseCase, 
         seeAllClientesNoDtoUseCase, 
         updatePersonUseCase, 
         findClienteByIdNoDtoUseCase, 

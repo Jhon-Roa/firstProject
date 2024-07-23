@@ -9,6 +9,7 @@ import com.firstproject.ciudad.application.GetAllCiudadesUseCase;
 import com.firstproject.ciudad.application.GetSpecifiedCiudadUseCase;
 import com.firstproject.cliente.application.CreateClienteUseCase;
 import com.firstproject.cliente.application.DeleteClienteUseCase;
+import com.firstproject.cliente.application.FindClientByIdUseCase;
 import com.firstproject.cliente.application.FindClienteByIdNoDtoUseCase;
 import com.firstproject.cliente.application.SeeAllClientesNoDtoUseCase;
 import com.firstproject.cliente.application.UpdateClienteUseCase;
@@ -16,6 +17,7 @@ import com.firstproject.cliente.infrastructure.in.DeleteClienteJPanel;
 import com.firstproject.cliente.infrastructure.in.ClienteAdminButton;
 import com.firstproject.cliente.infrastructure.in.CrearClienteJPanel;
 import com.firstproject.cliente.infrastructure.in.UpdateClienteJpanel;
+import com.firstproject.cliente.infrastructure.in.VerClienteJPanel;
 import com.firstproject.pais.application.GetAllPaisesUseCase;
 import com.firstproject.region.application.GetAllRegionesUseCase;
 import com.firstproject.region.application.GetSpecifiedPaisUseCase;
@@ -28,6 +30,7 @@ import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
     // clases de clientes
+    private FindClientByIdUseCase findClientByIdUseCase;
     private DeleteClienteUseCase deleteClienteUseCase;
     private SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase;
     private UpdateClienteUseCase updateClienteUseCase;
@@ -57,7 +60,8 @@ public class MainFrame extends JFrame {
     // panel de contenido
     private JPanel contentPanel;
     
-    public MainFrame(DeleteClienteUseCase deleteClienteUseCase,
+    public MainFrame(FindClientByIdUseCase findClientByIdUseCase,
+    DeleteClienteUseCase deleteClienteUseCase,
     SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase,
     UpdateClienteUseCase updateClienteUseCase,
     FindClienteByIdNoDtoUseCase findClienteByIdNoDtoUseCase,
@@ -73,6 +77,7 @@ public class MainFrame extends JFrame {
     CreateBarrioUseCase createBarrioUseCase,
     GetAllTipoDocumentosUseCase getAllTipoDocumentosUseCase) {
 
+        this.findClientByIdUseCase = findClientByIdUseCase;
         this.deleteClienteUseCase = deleteClienteUseCase;
         this.seeAllClientesNoDtoUseCase = seeAllClientesNoDtoUseCase;
         this.updateClienteUseCase = updateClienteUseCase;
@@ -105,7 +110,8 @@ public class MainFrame extends JFrame {
         // añadido de los botones (dropdown)
         leftPanel.add(new ClienteAdminButton(mostrarFormCreateUser(),
         mostrarFormUpdateUser(),
-        deleteCliente()));
+        deleteCliente(),
+        findCliente()));
 
         JScrollPane scrollPane = new JScrollPane(leftPanel);
         scrollPane.setPreferredSize(new Dimension(200, getHeight()));
@@ -174,6 +180,19 @@ public class MainFrame extends JFrame {
                 
                 updateContent(clientDelete);
             }    
+        };
+    }
+
+    private ActionListener findCliente() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VerClienteJPanel clientSearch = new VerClienteJPanel(findClientByIdUseCase, 
+                seeAllClientesNoDtoUseCase);
+
+                updateContent(clientSearch);
+            }
+            
         };
     }
 
