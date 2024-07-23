@@ -39,16 +39,27 @@ import com.firstproject.ciudad.domain.entity.Ciudad;
 import com.toedter.calendar.JDateChooser;
 
 public class CrearClienteJPanel extends JPanel {
+    // clases de cliente
     private CreateClienteUseCase createClienteUseCase;
+
+    // clases de paises
     private GetAllPaisesUseCase getAllPaisesUseCase;
     private PaisDropDown paisDropDown;
+
+    // clases de regiones
     private GetAllRegionesUseCase allRegionesUseCase;
     private RegionDropDown regionDropDown;
+
+    // clases de ciudades
     private GetAllCiudadesUseCase getAllCiudadesUseCase;
     private CiudadDropDown ciudadDropDown;
+
+    // clases de barrios
     private GetAllBarriosUseCase getAllBarriosUseCase;
     private CreateBarrioUseCase createBarrioUseCase;
     private BarrioDropDown barrioDropDown;
+
+    // clases de tipo documentos
     private GetAllTipoDocumentosUseCase getAllTipoDocumentosUseCase;
     private TipoDocumentoDropDown tipoDocumentoDropDown;
 
@@ -329,6 +340,7 @@ public class CrearClienteJPanel extends JPanel {
         segundoNombreField.setText("");
         primerApellidoField.setText("");
         segundoApellidoField.setText("");
+        fechaNacimientoChooser.setDate(null);
         
         JOptionPane.showMessageDialog(null, "guardado correctamente", "guardado", JOptionPane.INFORMATION_MESSAGE);
 

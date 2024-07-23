@@ -8,10 +8,11 @@ import com.firstproject.barrio.application.GetSpecifiedBarrioUseCase;
 import com.firstproject.ciudad.application.GetAllCiudadesUseCase;
 import com.firstproject.ciudad.application.GetSpecifiedCiudadUseCase;
 import com.firstproject.cliente.application.CreateClienteUseCase;
-import com.firstproject.cliente.application.FindClientByIdUseCase;
+import com.firstproject.cliente.application.DeleteClienteUseCase;
 import com.firstproject.cliente.application.FindClienteByIdNoDtoUseCase;
 import com.firstproject.cliente.application.SeeAllClientesNoDtoUseCase;
 import com.firstproject.cliente.application.UpdateClienteUseCase;
+import com.firstproject.cliente.infrastructure.in.DeleteClienteJPanel;
 import com.firstproject.cliente.infrastructure.in.ClienteAdminButton;
 import com.firstproject.cliente.infrastructure.in.CrearClienteJPanel;
 import com.firstproject.cliente.infrastructure.in.UpdateClienteJpanel;
@@ -26,23 +27,38 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
-    private JPanel contentPanel;
+    // clases de clientes
+    private DeleteClienteUseCase deleteClienteUseCase;
     private SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase;
     private UpdateClienteUseCase updateClienteUseCase;
     private FindClienteByIdNoDtoUseCase findClienteByIdNoDtoUseCase;
     private CreateClienteUseCase createClienteUseCase;
+
+    // clases de paises
     private GetSpecifiedPaisUseCase getSpecifiedPaisUseCase;
     private GetAllPaisesUseCase getAllPaisesUseCase;
+
+    // clases de regiones
     private GetSpecifiedRegionUseCase getSpecifiedRegionUseCase;
     private GetAllRegionesUseCase getAllRegionesUseCase;
+
+    // clases de ciudades
     private GetSpecifiedCiudadUseCase getSpecifiedCiudadUseCase;
     private GetAllCiudadesUseCase getAllCiudadesUseCase;
+
+    // clases de barrios
     private GetSpecifiedBarrioUseCase getSpecifiedBarrioUseCase;
     private GetAllBarriosUseCase getAllBarriosUseCase;
+
+    // clases de tipodocumentos
     private CreateBarrioUseCase createBarrioUseCase;
     private GetAllTipoDocumentosUseCase getAllTipoDocumentosUseCase;
-
-    public MainFrame(SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase,
+    
+    // panel de contenido
+    private JPanel contentPanel;
+    
+    public MainFrame(DeleteClienteUseCase deleteClienteUseCase,
+    SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase,
     UpdateClienteUseCase updateClienteUseCase,
     FindClienteByIdNoDtoUseCase findClienteByIdNoDtoUseCase,
     CreateClienteUseCase createClienteUseCase,
@@ -56,6 +72,8 @@ public class MainFrame extends JFrame {
     GetAllBarriosUseCase getAllBarriosUseCase,
     CreateBarrioUseCase createBarrioUseCase,
     GetAllTipoDocumentosUseCase getAllTipoDocumentosUseCase) {
+
+        this.deleteClienteUseCase = deleteClienteUseCase;
         this.seeAllClientesNoDtoUseCase = seeAllClientesNoDtoUseCase;
         this.updateClienteUseCase = updateClienteUseCase;
         this.findClienteByIdNoDtoUseCase = findClienteByIdNoDtoUseCase;
@@ -83,8 +101,11 @@ public class MainFrame extends JFrame {
 
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+
+        // añadido de los botones (dropdown)
         leftPanel.add(new ClienteAdminButton(mostrarFormCreateUser(),
-        mostrarFormUpdateUser())); //clienteAdminButton: tiene todos los ActionListener
+        mostrarFormUpdateUser(),
+        deleteCliente()));
 
         JScrollPane scrollPane = new JScrollPane(leftPanel);
         scrollPane.setPreferredSize(new Dimension(200, getHeight()));
@@ -98,6 +119,8 @@ public class MainFrame extends JFrame {
 
         add(splitPane, BorderLayout.CENTER);
     }
+
+    // conexion de los event listener de cliente 
 
     private ActionListener mostrarFormCreateUser() {
         return new ActionListener() {
@@ -140,6 +163,21 @@ public class MainFrame extends JFrame {
             
         };
     }
+
+    private ActionListener deleteCliente() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DeleteClienteJPanel clientDelete = new DeleteClienteJPanel(findClienteByIdNoDtoUseCase, 
+                deleteClienteUseCase, 
+                seeAllClientesNoDtoUseCase); 
+                
+                updateContent(clientDelete);
+            }    
+        };
+    }
+
+    // actualizacion de el panel derecho
 
     public void updateContent(JPanel newContent) {
         contentPanel.removeAll();

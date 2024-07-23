@@ -71,6 +71,7 @@ public class UpdateClienteJpanel extends JPanel {
     private JTextField primerApellidoField;
     private JTextField segundoApellidoField;
     private JDateChooser fechaNacimientoChooser;
+    private JButton  actualizarUsuarioButton;
 
     private boolean isInitializing;
 
@@ -298,7 +299,8 @@ public class UpdateClienteJpanel extends JPanel {
         // Crear un panel para el botón "Actualizar"
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 10)); // Espacio alrededor del botón
-        JButton actualizarUsuarioButton = new JButton("Actualizar");
+        actualizarUsuarioButton = new JButton("Actualizar");
+        actualizarUsuarioButton.setEnabled(false);
         buttonPanel.add(actualizarUsuarioButton);
     
         // Agregar el panel del botón al formulario
@@ -396,6 +398,8 @@ public class UpdateClienteJpanel extends JPanel {
 
         fechaNacimientoChooser.setEnabled(true);
         fechaNacimientoChooser.setDate(new java.util.Date(cliente.getFechaNacimiento().getTime()));
+
+        actualizarUsuarioButton.setEnabled(true);
 
         Barrio barrio = getSpecifiedBarrioUseCase.execute(cliente.getIdBarrio());
         Ciudad ciudad = getSpecifiedCiudadUseCase.execute(barrio.getIdCiudad());
