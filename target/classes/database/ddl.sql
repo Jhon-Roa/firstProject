@@ -102,7 +102,7 @@ CREATE TABLE unidadMedida (
 
 CREATE TABLE medicina (
     idMedicina INT AUTO_INCREMENT,
-    actas VARCHAR(10),
+    acta VARCHAR(10),
     nombre VARCHAR(100),
     registroSalud VARCHAR(50),
     descripcion VARCHAR(255),
