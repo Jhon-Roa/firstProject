@@ -27,7 +27,6 @@ import com.firstproject.region.application.GetSpecifiedRegionUseCase;
 import com.firstproject.region.domain.service.RegionServices;
 import com.firstproject.region.infrastructure.out.RegionRepository;
 import com.firstproject.tipodocumento.application.GetAllTipoDocumentosUseCase;
-import com.firstproject.tipodocumento.domain.entity.TipoDocumento;
 import com.firstproject.tipodocumento.domain.services.TipoDocumentoService;
 import com.firstproject.tipodocumento.infraestructure.out.TipoDocumentoRepository;
 import com.firstproject.ui.MainFrame;

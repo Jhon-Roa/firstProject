@@ -64,109 +64,72 @@ CREATE TABLE cliente (
 
 CREATE TABLE laboratorio (
     idLaboratorio INT AUTO_INCREMENT,
-    nombre VARCHAR(50) NOT NULL,
-    idBarrio INT NOT NULL,
-    CONSTRAINT pk_idLaboratio_laboratorio PRIMARY KEY (idLaboratorio),
-    CONSTRAINT fk_idBarrio_laboratio FOREIGN KEY (idBarrio)
-    REFERENCES barrio(idBarrio) ON DELETE CASCADE
+    nombre VARCHAR(100),
+    idBarrio INT,
+    CONSTRAINT pk_idLaboratorio PRIMARY KEY (idLaboratorio),
+    CONSTRAINT fk_idBarrio_laboratorio FOREIGN KEY (idBarrio)
+    REFERENCES barrio(idBarrio)
 );
 
-CREATE TABLE proveedor (
-    idProveedor INT AUTO_INCREMENT,
-    nombre VARCHAR(50) NOT NULL,
-    idBarrio INT NOT NULL,
-    CONSTRAINT pk_idProveedor_proveedor PRIMARY KEY (idProveedor),
-    CONSTRAINT fk_idBarrio_proveedor FOREIGN KEY (idBarrio)
-    REFERENCES barrio(idBarrio) ON DELETE CASCADE
-);
-
-CREATE TABLE proveedorlaboratorio (
-    idProveedor INT,
-    idLaboratorio INT,
-    CONSTRAINT pk_ProveedorLaboratorio PRIMARY KEY (idProveedor, idLaboratorio),
-    CONSTRAINT fk_idProveedor_proveedorLaboratorio FOREIGN KEY (idProveedor)
-    REFERENCES proveedor(idProveedor) ON DELETE CASCADE,
-    CONSTRAINT fk_idLaboratorio_proveedorLaboratorio FOREIGN KEY (idLaboratorio)
-    REFERENCES laboratorio(idLaboratorio) ON DELETE CASCADE
-);
-
-CREATE TABLE categoriaPrincipioActivo (
-    idCategoriaPrincipioActivo INT AUTO_INCREMENT,
-    nombre VARCHAR(20),
-    CONSTRAINT pk_idCategoriaPrincipioActivo_categoriaPrincipioActivo PRIMARY KEY (idCategoriaPrincipioActivo)    
+CREATE TABLE farmacia (
+    idFarmacia INT AUTO_INCREMENT,
+    nombre VARCHAR(100),
+    idBarrio INT,
+    direccion VARCHAR(100),
+    logoFarmacia MEDIUMBLOB,
+    CONSTRAINT pk_idFarmacia PRIMARY KEY (idFarmacia),
+    CONSTRAINT fk_idBarrio_farmacia FOREIGN KEY (idBarrio)
+    REFERENCES barrio(idBarrio)
 );
 
 CREATE TABLE principioActivo (
     idPrincipioActivo INT AUTO_INCREMENT,
-    nombre VARCHAR(20),
-    idCategoriaPrincipioActivo INT,
-    CONSTRAINT pk_idPrincipioActivo_principioActivo PRIMARY KEY (idPrincipioActivo),
-    CONSTRAINT fk_idCategoriaPrincipioActivo_principioActivo FOREIGN KEY (idCategoriaPrincipioActivo)
-    REFERENCES categoriaPrincipioActivo(idCategoriaPrincipioActivo) ON DELETE CASCADE
+    nombre VARCHAR(60),
+    CONSTRAINT pk_idPrincipioActivo PRIMARY KEY (idPrincipioActivo)
 );
 
 CREATE TABLE viaAdministracion (
     idViaAdministracion INT AUTO_INCREMENT,
-    nombre VARCHAR(30),
-    CONSTRAINT pk_idViaAdministracion_viaAdministracion PRIMARY KEY (idViaAdministracion)
+    nombre VARCHAR(60),
+    CONSTRAINT pk_idViaAdministracion PRIMARY KEY (idViaAdministracion)
 );
 
 CREATE TABLE unidadMedida (
-    idUnidadDeMedida INT AUTO_INCREMENT,
-    nombre VARCHAR(5),
-    CONSTRAINT pk_idUnidadDeMedida_unidadMedida PRIMARY KEY (idUnidadDeMedida)
+    idUnidadMedida INT AUTO_INCREMENT,
+    nombre VARCHAR(60),
+    CONSTRAINT pk_idUnidadMedida PRIMARY KEY (idUnidadMedida)
 );
 
-CREATE TABLE presentacion (
-    idPresentacion INT AUTO_INCREMENT,
-    nombre VARCHAR(50),
-    CONSTRAINT pk_idPresentacion_presentacion PRIMARY KEY (idPresentacion)
-);
-
-CREATE TABLE producto (
-    codigoProducto VARCHAR(30),
-    nombre VARCHAR(50) NOT NULL,
-    registroInvima VARCHAR(30),
-    idViaAdministracion INT NOT NULL,
-    idPrincipioActivo INT NOT NULL,
-    idUnidadDeMedida INT NOT NULL,
-    idPresentacion INT NOT NULL,
-    fechaCaducidad DATE NOT NULL,
-    stock INT NOT NULL,
-    stockMin INT NOT NULL,
-    stockMax INT NOT NULL,
-    valorVenta DECIMAL(20,2) DEFAULT 0.00,
-    CONSTRAINT pk_codigoProducto_producto PRIMARY KEY (codigoProducto),
-    CONSTRAINT fk_idViaAdministracion_producto FOREIGN KEY (idViaAdministracion)
+CREATE TABLE medicina (
+    idMedicina INT AUTO_INCREMENT,
+    actas VARCHAR(10),
+    nombre VARCHAR(100),
+    registroSalud VARCHAR(50),
+    descripcion VARCHAR(255),
+    idViaAdministracion INT,
+    idPrincipioActivo INT,
+    idUnidadMedida INT,
+    idLaboratorio INT,
+    CONSTRAINT pk_idMedicina PRIMARY KEY (idMedicina),
+    CONSTRAINT fk_idViaAdministracion_medicina FOREIGN KEY (idViaAdministracion)
     REFERENCES viaAdministracion(idViaAdministracion) ON DELETE CASCADE,
-    CONSTRAINT fk_idPrincipioActivo_producto FOREIGN KEY (idPrincipioActivo)
+    CONSTRAINT fk_idPrincipioActivo_medicina FOREIGN KEY (idPrincipioActivo)
     REFERENCES principioActivo(idPrincipioActivo) ON DELETE CASCADE,
-    CONSTRAINT fk_idUnidadDeMedida_producto FOREIGN KEY (idUnidadDeMedida)
-    REFERENCES unidadMedida(idUnidadDeMedida) ON DELETE CASCADE,
-    CONSTRAINT fk_idPresentacion_producto FOREIGN KEY (idPresentacion)
-    REFERENCES presentacion(idPresentacion) ON DELETE CASCADE
+    CONSTRAINT fk_idUnidadMedida_medicina FOREIGN KEY (idUnidadMedida)
+    REFERENCES unidadMedida(idUnidadMedida) ON DELETE CASCADE,
+    CONSTRAINT fk_idLaboratorio_medicina FOREIGN KEY (idLaboratorio)
+    REFERENCES laboratorio(idLaboratorio)
 );
 
-CREATE TABLE productoProveedor (
-    codigoProducto VARCHAR(30),
-    idProveedor INT,
-    CONSTRAINT pk_productoProveedor PRIMARY KEY (codigoProducto, idProveedor),
-    CONSTRAINT fk_codigoProducto_productoProveedor FOREIGN KEY (codigoProducto)
-    REFERENCES producto(codigoProducto) ON DELETE CASCADE,
-    CONSTRAINT fk_idProveedor_productoProveedor FOREIGN KEY (idProveedor)
-    REFERENCES proveedor(idProveedor) ON DELETE CASCADE
-);
-
-
-CREATE TABLE historialCompra (
-    idCompra INT AUTO_INCREMENT,
-    codigoProducto VARCHAR(30) NOT NULL,
-    fecha DATE NOT NULL,
-    cantidad INT,
-    precioCompra DECIMAL(20,2),
-    CONSTRAINT pk_idCompra_historialCompra PRIMARY KEY (idCompra),
-    CONSTRAINT fk_codigoProducto_historialCompra FOREIGN KEY (codigoProducto)
-    REFERENCES producto(codigoProducto) ON DELETE CASCADE 
+CREATE TABLE farmaciaMedicina (
+    idFarmacia INT,
+    idMedicina INT,
+    precio DECIMAL(10,2) UNSIGNED,
+    CONSTRAINT pk_idFarmacia_idMedicina PRIMARY KEY (idFarmacia, idMedicina),
+    CONSTRAINT fk_idFarmacia_farmaciaMedicina FOREIGN KEY (idFarmacia)
+    REFERENCES farmacia(idFarmacia) ON DELETE CASCADE,
+    CONSTRAINT fk_idMedicina_farmaciaMedicina FOREIGN KEY (idMedicina)
+    REFERENCES medicina(idMedicina) ON DELETE CASCADE
 );
 
 DELIMITER //
@@ -181,6 +144,17 @@ END //
 DELIMITER ;
 
 DELIMITER //
+CREATE TRIGGER before_delete_laboratorio
+BEFORE DELETE ON laboratorio
+FOR EACH ROW
+BEGIN
+    UPDATE medicina
+    SET idLaboratorio = NULL
+    WHERE idLaboratorio = OLD.idLaboratorio;
+END //
+DELIMITER;
+
+DELIMITER //
 CREATE FUNCTION calcular_edad(fecha_nacimiento DATE)
 RETURNS INT
 DETERMINISTIC
@@ -189,26 +163,4 @@ BEGIN
     SET edad = TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE());
     RETURN edad;
 END //
-DELIMITER ;
-
-DELIMITER //
-CREATE TRIGGER actualizar_valor_venta
-AFTER INSERT ON historialCompra
-FOR EACH ROW
-BEGIN
-    DECLARE nuevo_valor_venta DECIMAL(20, 2);
-
-    SELECT 
-        (SUM(cantidad * precioCompra) / SUM(cantidad)) * (1.2)
-    INTO 
-        nuevo_valor_venta
-    FROM 
-        historialCompra
-    WHERE 
-        codigoProducto = NEW.codigoProducto;
-
-    UPDATE Producto
-    SET valorVenta = nuevo_valor_venta
-    WHERE codigoProducto = NEW.codigoProducto;
-END//
 DELIMITER ;

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.firstproject.barrio.domain.entity.Barrio;
 import com.firstproject.pais.domain.entity.Pais;
 import com.firstproject.pais.domain.service.PaisServices;
 
@@ -43,11 +42,11 @@ public class PaisRepository implements PaisServices {
                     paises.add(pais);
                 }
                 return paises;
-            } catch (Exception e) {
-                // TODO: handle exception
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            // TODO: handle exception
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return paises;
     }

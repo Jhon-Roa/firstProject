@@ -315,7 +315,7 @@ public class CrearClienteJPanel extends JPanel {
         String primerApellido = primerApellidoField.getText();
         String segundoApellido = segundoApellidoField.getText();
         java.util.Date fechaNacimientoNoParse = fechaNacimientoChooser.getDate();
-        Date fechaNacimiento = new Date(fechaNacimientoNoParse.getTime());
+        Date fechaNacimiento = (fechaNacimientoNoParse != null) ? new Date(fechaNacimientoNoParse.getTime()) : null;
         Barrio barrio = barrioDropDown.getSelecteBarrio();
         TipoDocumento tipoDocumento = tipoDocumentoDropDown.getSelectedTipoDocumento();
         

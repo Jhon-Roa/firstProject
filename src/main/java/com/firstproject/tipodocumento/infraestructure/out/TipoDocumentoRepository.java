@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -41,11 +42,11 @@ public class TipoDocumentoRepository implements TipoDocumentoService {
                     tipoDocumentos.add(tipoDocumento);
                 }
                 return tipoDocumentos;
-            } catch (Exception e) {
-                // TODO: handle exception
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            // TODO: handle exception
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return tipoDocumentos;
     }

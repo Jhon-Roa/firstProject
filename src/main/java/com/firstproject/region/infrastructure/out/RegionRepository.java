@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.firstproject.barrio.domain.entity.Barrio;
-import com.firstproject.ciudad.domain.entity.Ciudad;
 import com.firstproject.region.domain.entity.Region;
 import com.firstproject.region.domain.service.RegionServices;
 
