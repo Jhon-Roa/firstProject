@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 
 import com.firstproject.viaadministracion.domain.entity.ViaAdministracion;
@@ -65,7 +66,7 @@ public class ViaAdministracionRepository implements ViaAdministracionServices {
     }
 
     @Override
-    public ViaAdministracion getEspecifiedViaAdministracion(int idViaAdministracion) {
+    public Optional<ViaAdministracion> getEspecifiedViaAdministracion(int idViaAdministracion) {
         try {
             String query = "SELECT idViaAdministracion, nombre " +
                            "FROM viaAdministracion " +
@@ -75,7 +76,7 @@ public class ViaAdministracionRepository implements ViaAdministracionServices {
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) {
                     ViaAdministracion viaAdministracion = new ViaAdministracion(rs.getInt("idViaAdministracion"), rs.getString("nombre"));
-                    return viaAdministracion;
+                    return Optional.of(viaAdministracion);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -83,7 +84,7 @@ public class ViaAdministracionRepository implements ViaAdministracionServices {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override

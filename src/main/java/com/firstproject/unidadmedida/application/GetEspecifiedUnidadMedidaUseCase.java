@@ -1,5 +1,7 @@
 package com.firstproject.unidadmedida.application;
 
+import java.util.Optional;
+
 import com.firstproject.unidadmedida.domain.entity.UnidadMedida;
 import com.firstproject.unidadmedida.domain.service.UnidadMedidaService;
 
@@ -10,7 +12,7 @@ public class GetEspecifiedUnidadMedidaUseCase {
         this.unidadMedidaService = unidadMedidaService;
     }
 
-    public UnidadMedida execute(int idUnidadMedida) {
+    public Optional<UnidadMedida> execute(int idUnidadMedida) {
         return unidadMedidaService.getEspecifiedUnidadMedida(idUnidadMedida);
     }
 }

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.swing.JOptionPane;
+
 import com.firstproject.farmaciamedicina.domain.entity.FarmaciaMedicina;
 import com.firstproject.farmaciamedicina.domain.entity.FarmaciaMedicinaDto;
 import com.firstproject.farmaciamedicina.domain.service.FarmaciaMedicinaService;
@@ -30,7 +32,7 @@ public class FarmaciaMedicinaRepository implements FarmaciaMedicinaService {
     }
 
     @Override
-    public void createFarmaciaMedicina(FarmaciaMedicina farmaciaMedicina) {
+    public boolean createFarmaciaMedicina(FarmaciaMedicina farmaciaMedicina) {
         try {
             String query= "INSERT INTO farmaciaMedicina(idFarmacia, idMedicina, precio) " +
                           "VALUES(?, ?, ?)";
@@ -39,8 +41,10 @@ public class FarmaciaMedicinaRepository implements FarmaciaMedicinaService {
             ps.setInt(2, farmaciaMedicina.getIdMedicina());
             ps.setFloat(3, farmaciaMedicina.getPrecio());
             ps.executeUpdate();
+            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "este registro ya existe", "error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
 
@@ -49,10 +53,10 @@ public class FarmaciaMedicinaRepository implements FarmaciaMedicinaService {
         List<FarmaciaMedicinaDto> medicinasFarmacias = new ArrayList<>();
         try {
             String query= "SELECT f.nombre, m.nombre, fm.precio " +
-                          "FROM farmaciaMedicia AS fm " +
+                          "FROM farmaciaMedicina AS fm " +
                           "JOIN farmacia AS f USING(idFarmacia) " +
                           "JOIN medicina AS m USING(idMedicina) " +
-                          "WHERE f.id = ?";
+                          "WHERE f.idFarmacia = ?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, idFarmacia);
             try (ResultSet rs = ps.executeQuery()){
@@ -72,7 +76,7 @@ public class FarmaciaMedicinaRepository implements FarmaciaMedicinaService {
     }
 
     @Override
-    public void deleteMedicinaFromFarmacia(FarmaciaMedicina farmaciaMedicina) {
+    public boolean deleteMedicinaFromFarmacia(FarmaciaMedicina farmaciaMedicina) {
         try {
             String query = "DELETE " +
                            "FROM farmaciaMedicina " +
@@ -80,9 +84,17 @@ public class FarmaciaMedicinaRepository implements FarmaciaMedicinaService {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, farmaciaMedicina.getIdFarmacia());
             ps.setInt(2, farmaciaMedicina.getIdMedicina());
-            ps.executeUpdate();
+            int rowCount = ps.executeUpdate();
+            System.out.println(rowCount);
+            if (rowCount > 0) {
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "este registro no existe", "error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 }

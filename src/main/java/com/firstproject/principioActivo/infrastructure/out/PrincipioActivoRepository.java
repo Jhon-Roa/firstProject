@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 
 import com.firstproject.principioActivo.domain.entity.PrincipioActivo;
@@ -64,7 +65,7 @@ public class PrincipioActivoRepository implements PrincipioActivoService {
     }
 
     @Override
-    public PrincipioActivo getEspecifiedPrincipioActivo(int idPrincipioActivo) {
+    public Optional<PrincipioActivo> getEspecifiedPrincipioActivo(int idPrincipioActivo) {
         try {
             String query = "SELECT idPrincipioActivo, nombre " +
                            "FROM principioActivo " +
@@ -74,7 +75,7 @@ public class PrincipioActivoRepository implements PrincipioActivoService {
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) {
                     PrincipioActivo principioActivo = new PrincipioActivo(rs.getInt("idPrincipioActivo"), rs.getString("nombre"));
-                    return principioActivo;
+                    return Optional .of(principioActivo);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -82,14 +83,14 @@ public class PrincipioActivoRepository implements PrincipioActivoService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
     public void crearPrincipioActivo(String nombre) {
         try {
             String query = "INSERT INTO principioActivo(nombre) " +
-                           "VALUES(?)";
+                           "VALUES (?)";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, nombre);
             ps.executeUpdate();

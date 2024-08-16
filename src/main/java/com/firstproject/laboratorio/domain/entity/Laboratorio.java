@@ -34,4 +34,9 @@ public class Laboratorio {
     public void setIdBarrio(int idBarrio) {
         this.idBarrio = idBarrio;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

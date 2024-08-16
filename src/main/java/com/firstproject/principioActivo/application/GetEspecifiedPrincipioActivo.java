@@ -1,5 +1,7 @@
 package com.firstproject.principioActivo.application;
 
+import java.util.Optional;
+
 import com.firstproject.principioActivo.domain.entity.PrincipioActivo;
 import com.firstproject.principioActivo.domain.service.PrincipioActivoService;
 
@@ -10,7 +12,7 @@ public class GetEspecifiedPrincipioActivo {
         this.principioActivoService = principioActivoService;
     }
 
-    public PrincipioActivo execute(int idPrincipioActivo) {
+    public Optional<PrincipioActivo> execute(int idPrincipioActivo) {
         return principioActivoService.getEspecifiedPrincipioActivo(idPrincipioActivo);
     } 
 }

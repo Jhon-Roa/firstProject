@@ -93,10 +93,10 @@ public class MedicinaRepository implements MedicinaService {
     }
 
     @Override
-    public Medicina getEspecifiedMedicina(int idMedicina) {
+    public Optional<Medicina> getEspecifiedMedicina(int idMedicina) {
         try {
             String query= "SELECT idMedicina, acta, nombre, registroSalud, descripcion, idViaAdministracion, idPrincipioActivo, idUnidadMedida, idLaboratorio " +
-                          "FROM medicina" +
+                          "FROM medicina " +
                           "WHERE idMedicina = ?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, idMedicina);
@@ -111,7 +111,7 @@ public class MedicinaRepository implements MedicinaService {
                     rs.getInt("idPrincipioActivo"),
                     rs.getInt("idUnidadMedida"), 
                     rs.getInt("idLaboratorio"));
-                    return medicina;
+                    return Optional.of(medicina);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -119,7 +119,7 @@ public class MedicinaRepository implements MedicinaService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -161,8 +161,8 @@ public class MedicinaRepository implements MedicinaService {
     @Override
     public void creatMedicina(Medicina medicina) {
         try {
-            String query = "INSERT INTO medicina(acta, nombre, registroSalud, descripcion, idViaAdministracion, idPrincipioActivo, idUnidadMedida, idLaboratorio )" +
-                           "values(?, ?, ?, ?, ?, ?, ?, ?;";
+            String query = "INSERT INTO medicina(acta, nombre, registroSalud, descripcion, idViaAdministracion, idPrincipioActivo, idUnidadMedida, idLaboratorio) " +
+                           "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, medicina.getActa());
             ps.setString(2, medicina.getNombre());

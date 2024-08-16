@@ -9,7 +9,7 @@ import com.firstproject.farmacia.domain.entity.FarmaciaDto;
 public interface FarmaciaService {
     List<FarmaciaDto> getAllFarmaciasDto();
     List<Farmacia> getAllFarmacias();
-    Farmacia getEspecifiedFarmacia(int idFarmacia);
+    Optional<Farmacia> getEspecifiedFarmacia(int idFarmacia);
     Optional<FarmaciaDto> findFarmacia(int idFarmacia);
     void crearFarmacia(Farmacia farmacia);
     void deleteFarmacia(int idFarmacia);

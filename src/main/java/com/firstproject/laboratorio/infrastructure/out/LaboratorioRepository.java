@@ -1,4 +1,4 @@
-package com.firstproject.laboratorio.infrastructure;
+package com.firstproject.laboratorio.infrastructure.out;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 
 import com.firstproject.laboratorio.domain.entity.Laboratorio;
@@ -35,7 +36,7 @@ public class LaboratorioRepository implements LaboratorioService {
         try {
             String query = "SELECT l.idLaboratorio, l.nombre, b.nombre " +
                            "FROM laboratorio AS l " +
-                           "JOIN barrio AS b USING(b.idBarrio)";
+                           "JOIN barrio AS b USING(idBarrio)";
             PreparedStatement ps = connection.prepareStatement(query);
             try (ResultSet rs = ps.executeQuery()){
                 while (rs.next()) {
@@ -77,19 +78,19 @@ public class LaboratorioRepository implements LaboratorioService {
     }
 
     @Override
-    public Laboratorio getSpecifiedLaboratorio(Laboratorio laboratorio) {
+    public Optional<Laboratorio> getSpecifiedLaboratorio(int idLaboratorio) {
         try {
             String query = "SELECT idLaboratorio, nombre, idBarrio " +
                            "FROM laboratorio " +
                            "WHERE idLaboratorio = ?";
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, laboratorio.getIdLaboratorio());
+            ps.setInt(1, idLaboratorio);
             try (ResultSet rs = ps.executeQuery()){
                 if(rs.next()) {
                     Laboratorio laboratorioQuery = new Laboratorio(rs.getInt("idLaboratorio"), 
                     rs.getString("nombre"), 
                     rs.getInt("idBarrio"));
-                    return laboratorioQuery;
+                    return Optional.of(laboratorioQuery);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -97,7 +98,7 @@ public class LaboratorioRepository implements LaboratorioService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -105,7 +106,7 @@ public class LaboratorioRepository implements LaboratorioService {
         try {
             String query = "DELETE " +
                            "FROM laboratorio " +
-                           "WHERE idLaboratorio";
+                           "WHERE idLaboratorio = ?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, idLaboratorio);
             ps.executeUpdate();

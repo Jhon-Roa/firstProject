@@ -54,4 +54,9 @@ public class Farmacia {
     public void setLogoFarmacia(byte[] logoFarmacia) {
         this.logoFarmacia = logoFarmacia;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

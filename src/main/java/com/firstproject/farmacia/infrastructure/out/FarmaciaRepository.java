@@ -1,6 +1,5 @@
 package com.firstproject.farmacia.infrastructure.out;
 
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -37,7 +36,7 @@ public class FarmaciaRepository implements FarmaciaService {
         try {
             String query = "SELECT f.idFarmacia, f.nombre, b.nombre, f.direccion, f.logoFarmacia " +
                            "FROM farmacia AS f " +
-                           "JOIN barrios AS b USING(idBarrio)";
+                           "JOIN barrio AS b USING(idBarrio)";
             PreparedStatement ps = connection.prepareStatement(query);
             try (ResultSet rs = ps.executeQuery()){
                 while (rs.next()) {
@@ -83,7 +82,7 @@ public class FarmaciaRepository implements FarmaciaService {
     }
 
     @Override
-    public Farmacia getEspecifiedFarmacia(int idFarmacia) {
+    public Optional<Farmacia> getEspecifiedFarmacia(int idFarmacia) {
         try {
             String query = "SELECT idFarmacia, nombre, idBarrio, direccion, logoFarmacia " +
                            "FROM farmacia " +
@@ -97,7 +96,7 @@ public class FarmaciaRepository implements FarmaciaService {
                     rs.getInt("idBarrio"), 
                     rs.getString("direccion"), 
                     rs.getBytes("logoFarmacia"));
-                    return farmacia;
+                    return Optional.of(farmacia);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -105,7 +104,7 @@ public class FarmaciaRepository implements FarmaciaService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -155,7 +154,7 @@ public class FarmaciaRepository implements FarmaciaService {
     public void deleteFarmacia(int idFarmacia) {
         try {
             String query = "DELETE " +
-                           "FROM farmacia" +
+                           "FROM farmacia " +
                            "WHERE idFarmacia = ?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, idFarmacia);
@@ -176,6 +175,7 @@ public class FarmaciaRepository implements FarmaciaService {
             ps.setInt(2, farmacia.getIdBarrio());
             ps.setString(3, farmacia.getDireccion());
             ps.setBytes(4, farmacia.getLogoFarmacia());
+            ps.setInt(5, farmacia.getIdFarmacia());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

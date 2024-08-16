@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 
 import com.firstproject.unidadmedida.domain.entity.UnidadMedida;
@@ -64,7 +65,7 @@ public class UnidadMedidaRepository implements UnidadMedidaService{
     }
 
     @Override
-    public UnidadMedida getEspecifiedUnidadMedida(int idUnidadMedida) {
+    public Optional<UnidadMedida> getEspecifiedUnidadMedida(int idUnidadMedida) {
         try {
             String query = "SELECT idUnidadMedida, nombre " +
                            "FROM unidadMedida " +
@@ -74,7 +75,7 @@ public class UnidadMedidaRepository implements UnidadMedidaService{
             try (ResultSet rs = ps.executeQuery()){
                 if (rs.next()) {
                     UnidadMedida unidadMedida = new UnidadMedida(rs.getInt("idUnidadMedida"), rs.getString("nombre"));
-                    return unidadMedida;
+                    return Optional.of(unidadMedida);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -82,13 +83,13 @@ public class UnidadMedidaRepository implements UnidadMedidaService{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
     public void crearUnidadMedida(String nombre) {
         try {
-            String query = "INSERT INTO unidadMedidad(nombre) " +
+            String query = "INSERT INTO unidadMedida(nombre) " +
                            "VALUES(?)";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, nombre);

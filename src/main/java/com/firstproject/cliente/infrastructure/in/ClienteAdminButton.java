@@ -60,9 +60,8 @@ public class ClienteAdminButton extends JPanel {
         verClientes.addActionListener(actionListenerSeeAllClientes);
         buscarCliente.addActionListener(actionListenerFindCliente);
 
-        optionsPanel.setVisible(menuExpanded); // Inicialmente oculto
+        optionsPanel.setVisible(menuExpanded); 
 
-        // Agregar componentes al panel de menú
         add(toggleMenuButton);
         add(optionsPanel);
     }

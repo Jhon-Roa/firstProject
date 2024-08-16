@@ -1,5 +1,7 @@
 package com.firstproject.laboratorio.application;
 
+import java.util.Optional;
+
 import com.firstproject.laboratorio.domain.entity.Laboratorio;
 import com.firstproject.laboratorio.domain.service.LaboratorioService;
 
@@ -10,7 +12,7 @@ public class GetSpecifiedLaboratorioUseCase {
         this.laboratorioService = laboratorioService;
     }
 
-    public Laboratorio execute(Laboratorio laboratorio) {
-        return laboratorioService.getSpecifiedLaboratorio(laboratorio);
+    public Optional<Laboratorio> execute(int idLaboratorio) {
+        return laboratorioService.getSpecifiedLaboratorio(idLaboratorio);
     }
 }

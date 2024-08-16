@@ -95,4 +95,9 @@ public class Medicina {
     public void setIdLaboratorio(int idLaboratorio) {
         this.idLaboratorio = idLaboratorio;
     }
+
+    @Override 
+    public String toString() {
+        return nombre;
+    }
 }

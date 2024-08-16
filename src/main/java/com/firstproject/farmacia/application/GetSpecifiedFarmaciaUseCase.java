@@ -1,5 +1,7 @@
 package com.firstproject.farmacia.application;
 
+import java.util.Optional;
+
 import com.firstproject.farmacia.domain.entity.Farmacia;
 import com.firstproject.farmacia.domain.service.FarmaciaService;
 
@@ -10,7 +12,7 @@ public class GetSpecifiedFarmaciaUseCase {
         this.farmaciaService = farmaciaService;
     }
 
-    public Farmacia execute(int idFarmacia) {
+    public Optional<Farmacia> execute(int idFarmacia) {
         return farmaciaService.getEspecifiedFarmacia(idFarmacia);
     }
 }

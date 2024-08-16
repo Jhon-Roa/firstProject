@@ -152,7 +152,7 @@ BEGIN
     SET idLaboratorio = NULL
     WHERE idLaboratorio = OLD.idLaboratorio;
 END //
-DELIMITER;
+DELIMITER ;
 
 DELIMITER //
 CREATE FUNCTION calcular_edad(fecha_nacimiento DATE)

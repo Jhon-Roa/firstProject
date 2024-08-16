@@ -104,7 +104,6 @@ public class CrearClienteJPanel extends JPanel {
         ciudadDropDown = new CiudadDropDown(habilitarBarrio(), getAllCiudadesUseCase);
         barrioDropDown = new BarrioDropDown(crearBarrio(), getAllBarriosUseCase);
         tipoDocumentoDropDown = new TipoDocumentoDropDown(getAllTipoDocumentosUseCase);
-
     }
 
     private void addComponentsToPanel() {
@@ -129,7 +128,7 @@ public class CrearClienteJPanel extends JPanel {
         documentoField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e){
-                if (documentoField.getText().length() > 30) {
+                if (documentoField.getText().length() == 30) {
                     e.consume();
                 }
             }
@@ -150,7 +149,7 @@ public class CrearClienteJPanel extends JPanel {
         primerNombreField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e){
-                if (primerNombreField.getText().length() > 20) {
+                if (primerNombreField.getText().length() == 20) {
                     e.consume();
                 }
             }
@@ -170,7 +169,7 @@ public class CrearClienteJPanel extends JPanel {
         segundoNombreField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e){
-                if (segundoNombreField.getText().length() > 20) {
+                if (segundoNombreField.getText().length() == 20) {
                     e.consume();
                 }
             }
@@ -190,7 +189,7 @@ public class CrearClienteJPanel extends JPanel {
         primerApellidoField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e){
-                if (primerApellidoField.getText().length() > 20) {
+                if (primerApellidoField.getText().length() == 20) {
                     e.consume();
                 }
             }
@@ -210,7 +209,7 @@ public class CrearClienteJPanel extends JPanel {
         segundoApellidoField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e){
-                if (segundoApellidoField.getText().length() > 20) {
+                if (segundoApellidoField.getText().length() == 20) {
                     e.consume();
                 }
             }

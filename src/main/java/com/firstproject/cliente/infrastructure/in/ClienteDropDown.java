@@ -16,7 +16,9 @@ public class ClienteDropDown extends JPanel {
     private JComboBox<Cliente> clienteComboBox;
     private SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase;
 
-    public ClienteDropDown(ActionListener actionListenerDropDown, ActionListener actionListenerButton, SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase) {
+    public ClienteDropDown(ActionListener actionListenerDropDown, 
+    ActionListener actionListenerButton, 
+    SeeAllClientesNoDtoUseCase seeAllClientesNoDtoUseCase) {
         this.seeAllClientesNoDtoUseCase = seeAllClientesNoDtoUseCase;
 
         buscarCliente = new JButton("Buscar");

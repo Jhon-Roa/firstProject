@@ -10,7 +10,7 @@ public class DeleteMedicinaFromFarmaciaUseCase {
         this.farmaciaMedicinaService = farmaciaMedicinaService;
     }
 
-    public void execute(FarmaciaMedicina farmaciaMedicina) {
-        farmaciaMedicinaService.deleteMedicinaFromFarmacia(farmaciaMedicina);
+    public boolean execute(FarmaciaMedicina farmaciaMedicina) {
+        return farmaciaMedicinaService.deleteMedicinaFromFarmacia(farmaciaMedicina);
     }
 }

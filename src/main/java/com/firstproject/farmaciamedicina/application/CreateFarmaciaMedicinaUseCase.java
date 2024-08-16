@@ -10,7 +10,7 @@ public class CreateFarmaciaMedicinaUseCase {
         this.farmaciaMedicinaService = farmaciaMedicinaService;
     }
 
-    public void execute(FarmaciaMedicina farmaciaMedicina) {
-        farmaciaMedicinaService.createFarmaciaMedicina(farmaciaMedicina);
+    public boolean execute(FarmaciaMedicina farmaciaMedicina) {
+        return farmaciaMedicinaService.createFarmaciaMedicina(farmaciaMedicina);
     }
 }
